@@ -22,7 +22,8 @@ execute:
 -   `csv`
 
 ```{r wd-1-csv}
-
+# Lab 2, q1
+surveys <- read_csv(file = here("Week2", "Lab2", "surveys.csv"))
 ```
 
 -   `xlsx`
@@ -40,7 +41,13 @@ execute:
 **WD-2: I can select necessary columns from a dataset.**
 
 ```{r wd-2}
-
+# Lab 3, q8
+hiphop_clean |>
+  select(subj, sex, age, ethnic) |>
+  distinct(.keep_all = TRUE) |>
+  subset(sex != "Female") |>
+  subset(ethnic == "white") |>
+  summary()
 ```
 
 **WD-3: I can filter rows from a dataframe for a *variety* of data types (e.g., numeric, integer, character, factor, date).**
@@ -48,13 +55,25 @@ execute:
 -   numeric
 
 ```{r wd-3-numeric}
-
+# Lab 3, q11
+hiphop_clean |>
+  mutate(familiarity = as.numeric(familiarity)) |>
+  filter(age < 20) |>
+  group_by(word) |>
+  summarise(avg = mean(familiarity)) |>
+  arrange(desc(avg))
 ```
 
 -   character -- specifically a string
 
 ```{r wd-3-string}
-
+# Lab 3, q12
+hiphop_clean |>
+  mutate(familiarity = as.numeric(familiarity)) |>
+  filter(sex == "Female" & ethnic == "non-white") |>
+  group_by(word) |>
+  summarise(avg = mean(familiarity)) |>
+  arrange(desc(avg))
 ```
 
 -   factor
@@ -74,19 +93,37 @@ execute:
 -   numeric
 
 ```{r wd-4-numeric}
-
+# Lab 3, q12
+hiphop_clean |>
+  mutate(familiarity = as.numeric(familiarity)) |>
+  filter(sex == "Female" & ethnic == "non-white") |>
+  group_by(word) |>
+  summarise(avg = mean(familiarity)) |>
+  arrange(desc(avg))
 ```
 
 -   character -- specifically a string
 
 ```{r wd-4-string}
-
+# Lab 3, q7
+hiphop_clean <- hiphop_clean |>
+  mutate(ethnic = if_else(condition = ethnic == "white", true = "white", 
+                          false = "non-white"))
 ```
 
 -   factor
 
 ```{r wd-4-factor}
-
+# Lab 5, part 2 q3
+halfweek_captures <- surveys |>
+  count(day_of_week) |>
+  drop_na() |>
+  mutate(
+    day_of_week = fct_collapse(day_of_week, 
+                               "Weekday" = c("Mon", "Tue", "Wed", "Thu", "Fri"),
+                               "Weekend" = c("Sat", "Sun")
+    )
+  )
 ```
 
 -   date
@@ -112,7 +149,8 @@ execute:
 -   `inner_join()`
 
 ```{r wd-5-inner}
-
+# Practice activity 3
+inner_join(prof_info, prof_course)
 ```
 
 -   `full_join()`
@@ -126,13 +164,27 @@ execute:
 -   `semi_join()`
 
 ```{r wd-6-semi}
+# Lab 4, q6
+cali_remove <- tibble(region = c("LosAngeles", "SanDiego", "Sacramento", 
+                                  "SanFrancisco"))
 
+diffs <- avocados |>
+  semi_join(cali_remove) |>
+  group_by(region, type, year) |>
+  summarize(mean(AveragePrice))
 ```
 
 -   `anti_join()`
 
 ```{r wd-6-anti}
+# Lab 4, q2
+regions <- tibble(region = c("West", "GreatLakes", "Midsouth", "Plains", 
+                             "SouthCentral", "Southeast", "TotalUS", 
+                             "NorthernNewEngland", "Northeast"))
 
+avocados |>
+  anti_join(regions) |> # remove regions with filtering join
+  rename(location = region)
 ```
 
 **WD-7: I can pivot dataframes from long to wide and visa versa**
@@ -140,13 +192,16 @@ execute:
 -   `pivot_longer()`
 
 ```{r wd-7-long}
-
 ```
 
 -   `pivot_wider()`
 
 ```{r wd-7-wide}
-
+# Lab 4, q6
+diffs |>
+  group_by(region, type) |>
+  summarize(price = mean(`mean(AveragePrice)`)) |>
+  pivot_wider(names_from = type, values_from = price)
 ```
 
 ## Reproducibility
@@ -154,19 +209,34 @@ execute:
 **R-1: I can create professional looking, reproducible analyses using RStudio projects, Quarto documents, and the here package.**
 
 I've done this in the following provided assignments:
+Lab 2, Challenge 2, Lab 3
 
 **R-2: I can write well documented and tidy code.**
 
 -   Example 1
 
 ```{r r-2-1}
-
+# Lab 2, q6 (named code chunks)
+#```{r jitter}
+ggplot(data = surveys, mapping = aes(x = weight, y = hindfoot_length)) +
+  geom_jitter(alpha = 0.1, width = 0.2, height = 0.2) +
+  labs(x = "Weight of Rodent (g)", y = "Rodent Hindfoot Length (mm)")
+#```
 ```
 
 -   Example 2
 
 ```{r r-2-2}
-
+# Lab 3, q5
+hiphop_clean <- hiphop |> 
+  # replace all NA values with zeroes
+  mutate(across(.cols = numPreferredArtists:numOverallArtists, 
+                .fns = ~replace_na(., replace = 0)),
+         # replace zeroes in city & county cols with NA
+         across(.cols = city:county, .fns = ~na_if(x = ., y = 0)),
+         # convert likert scores stored as nums to factors
+         across(.cols = c("familiarity", "jayz", "barkley", "boondocks", 
+                          "monique", "bieber"), .fns = factor))
 ```
 
 **R-3: I can write robust programs that are resistant to changes in inputs.**
