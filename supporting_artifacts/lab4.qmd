@@ -1,0 +1,136 @@
+---
+title: "lab4"
+author: "Carson Freedman"
+format:
+  html:
+    self-contained: true
+    code-tools: true
+    code-fold: true
+execute:
+  echo: true
+  messages: false
+  warning: false
+  error: true
+editor: visual
+---
+
+# Lab 4
+
+## Libraries & Data Import
+
+```{r libs}
+library(tidyverse)
+library(here)
+```
+
+```{r data}
+avocados <- read_csv(file = here("Week4", "Lab4", "avocado.csv"))
+```
+
+**1.** Briefly describe the dataset. What information does it contain?
+
+The dataset contains weekly retail scan data for Hass avocados' national retail volume and price in 2018. It includes information on the date of observation, the average price of a single avocado, the type (conventional or organic), the year, the region or city of observation, the total volume and number of avocados sold for three different PLU codes (4046, 4225, 4770), the total number of small, large, and extra-large bags sold, and the year.
+
+**2.** Clean the data in any way you see fit.
+
+```{r}
+regions <- tibble(region = c("West", "GreatLakes", "Midsouth", "Plains", 
+                             "SouthCentral", "Southeast", "TotalUS", 
+                             "NorthernNewEngland", "Northeast"))
+# create data set with only data from major regions
+regional_avocados <- avocados |>
+  semi_join(regions)
+
+avocados |>
+  anti_join(regions) |> # remove regions with filtering join
+  rename(location = region)
+  
+```
+
+3.  Which major region sold the most organic, small Hass avocados in 2017?
+
+```{r}
+regional_avocados |>
+  filter(region != "TotalUS" & region != "NorthernNewEngland" 
+         & type == "organic" & year == 2017) |>
+  group_by(region) |>
+  summarize(sum(`Small Bags`)) |>
+  arrange(desc(`sum(\`Small Bags\`)`)) |>
+  slice_head()
+```
+
+Northeast
+
+4.  Use the separate() function to split the Date variable into year, month, and day. In which month is the highest volume of avocado sales?
+
+```{r}
+regional_avocados |>
+  separate(col = Date, sep = "-", into = c("year", "month", "day")) |>
+  group_by(month) |>
+  summarise(sum(`Total Volume`)) |>
+  arrange(desc(`sum(\`Total Volume\`)`)) |>
+  slice_head()
+```
+
+February (Month 2)
+
+5.  Which metro area regions sold the most total avocados? Plot side-by-side boxplots of total volume for only the five regions with the highest averages for the Total Volume variable.
+
+```{r}
+nonmetro <- tibble(region = c("California", "Denver", "GreatLakes", "Midsouth",
+                             "NewYork", "Northeast", "NorthernNewEngland",
+                             "Plains", "SouthCarolina", "SouthCentral",
+                             "Southeast", "TotalUS", "West", "WestTexNewMexico"))
+
+metro_avos <- avocados |>
+  anti_join(nonmetro) |>
+  group_by(region) |>
+  summarise(mean(`Total Volume`)) |>
+  arrange(desc(`mean(\`Total Volume\`)`)) |>
+  slice(1:5)
+
+ggplot(data = metro_avos, mapping = aes(x = region, y = `mean(\`Total Volume\`)`)) +
+  geom_boxplot() +
+  labs(x = "Region", y = "Total Volume of Avocados Sold")
+```
+
+DFW, Houston, LA, Phoenix/Tuscon, and SF
+
+**6.** In which regions is the price of organic versus conventional avocados most different? Support your answer with a few summary statistics and a visualization.
+
+```{r}
+cali_remove <- tibble(region = c("LosAngeles", "SanDiego", "Sacramento", 
+                                  "SanFrancisco"))
+diffs <- avocados |>
+  semi_join(cali_remove) |>
+  group_by(region, type, year) |>
+  summarize(mean(AveragePrice))
+
+ggplot(data = diffs, mapping = aes(y = `mean(AveragePrice)`, x = region,
+                                   color = type, fill = type)) +
+  geom_col(position = position_dodge()) +
+  labs(x = "Region", y = "Average Price")
+```
+
+```{r}
+diffs |>
+  group_by(region, type) |>
+  summarize(price = mean(`mean(AveragePrice)`)) |>
+  pivot_wider(names_from = type, values_from = price)
+```
+
+*San Francisco*
+
+**7.** The following plot shows, for all four California regions, the proportion of the mean Hass avocado sales that are small, large, or extra large; conventional vs. organic. Recreate the plot.
+
+```{r}
+replot <- avocados |>
+  semi_join(cali_remove) |>
+  group_by(region) |>
+  summarize(s_pro = mean(`Small Bags` / `Total Bags`), 
+            l_pro = mean(`Large Bags` / `Total Bags`), 
+            xl_pro = mean(`XLarge Bags` / `Total Bags`))
+
+# ggplot(data = replot, mapping = aes(x = region, y = c(s_pro, l_pro, xl_pro))) + 
+# geom_col(position = position_dodge())
+```

@@ -1,0 +1,178 @@
+---
+title: "Lab 3"
+author: "Carson Freedman"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+execute:
+  echo: true
+  messages: false
+  warning: false
+editor: visual
+---
+
+```{r libs}
+library(tidyverse)
+library(here)
+```
+
+## Getting Started
+
+### 1. Load the appropriate R packages and import the data set, hiphop.
+
+```{r data}
+hiphop <- read_csv(file = here("Week3", "Lab3", "hiphop.csv"))
+```
+
+### 2.**Provide a brief overview (2-4 sentences) of the dataset.**
+
+This data set contains results on 168 participants' familiarity with African-American English (AAE) vocabulary, demographics, social network, music, and pop-culture knowledge. Participants were asked to define 64 AAE vocabulary items and provide self-reported information on various factors that could impact their familiarity with the vocabulary. The dependent variable, "familiarity," measures the participants' knowledge of the vocabulary on a five-point Likert scale, while the independent variables include demographic information, social network, music preferences, and pop-culture knowledge.
+
+### 3. What are the rows of this dataset? It is not one person per row!
+
+Each row of the dataset contains the data associated with a participant's definition of one of the 64 AAE vocabulary terms asked in the experiment
+
+## Cleaning the Data
+
+### **4. Missing values for some of the variables were replaced with other values. How were missing values replaced? What do you believe are some benefits and drawbacks of doing this?**
+
+Missing values in the social network variables were replaced with their mean values.
+
+Benefits: Don't reduce sample size of dataset due to missing data Drawbacks: May distort the distribution of variable
+
+### 5. Clean the data set in whichever ways you see fit. This might mean adjusting variable type, for example from character to factor, or dealing with missing data. Assign your cleaned data set to a new data set named hiphop_clean -- use this data set going forward.
+
+```{r cleaning}
+hiphop_clean <- hiphop |> 
+  # replace all NA values with zeroes
+  mutate(across(.cols = numPreferredArtists:numOverallArtists, 
+                .fns = ~replace_na(., replace = 0)),
+         # replace zeroes in city & county cols with NA
+         across(.cols = city:county, .fns = ~na_if(x = ., y = 0)),
+         # convert likert scores stored as nums to factors
+         across(.cols = c("familiarity", "jayz", "barkley", "boondocks", 
+                          "monique", "bieber"), .fns = factor))
+
+```
+
+## Data Summaries
+
+### 6. How many unique AAE words were studied in this dataset?
+
+Helpful functions: `distinct()`, `count()`
+
+```{r}
+hiphop_clean |> 
+  distinct(word) |> 
+  count()
+```
+
+**64**
+
+### 7. Make a new variable that re-categorizes `ethnic` into only two groups, "white" and "non-white", to simplify your data.
+
+Helpful functions: `mutate()`, `if_else()`
+
+```{r}
+hiphop_clean <- hiphop_clean |>
+  mutate(ethnic = if_else(condition = ethnic == "white", true = "white", 
+                          false = "non-white"))
+```
+
+### 8. What are the demographics of the people in this study? Investigate the variables `sex`, `age`, and `ethnic` and summarize your findings in 1-3 complete sentences.
+
+*Hint: You'll need to first manipulate your data to have each person represented only once.* Helpful functions: `select()`, `distinct(___, .keep_all = TRUE)`, `count()`, `summary()`
+
+```{r}
+hiphop_clean |>
+  select(subj, sex, age, ethnic) |>
+  distinct(.keep_all = TRUE) |>
+  subset(sex == "Male") |>
+  subset(ethnic == "non-white") |>
+  count() |>
+  summary()
+```
+
+The average age of the person in this study is 19, with the youngest being 16 and the oldest being 48. There are significantly more females than males, 117 females to 51 males. Additionally, the majority of participants are white, with 44 white males and 91 white females.
+
+### 9. It is fairly common for researchers to collapse ethnic or racial categories similar to what you just did. What are some issues with representing the data in this way?
+
+Simplifying the ethnic category into a binary white/non-white form simplifies or discards the nuances associated with more descriptive racial terms, as well as fails to represent those of mixed race.
+
+### 10. Make at least two plots to display the demographic information of the subjects in this study. You do not need to discuss these plots, but make sure they are appropriate to the data types and have informative titles and axis labels. Feel free to use the skills you learned in Challenge 3 to enhance your plots!
+
+```{r plot1}
+ggplot(data = hiphop_clean, mapping = aes(x = age, fill = ethnic)) +
+  geom_bar() +
+  labs(x = "Age of Participant", y = "Number of Responses", fill = "Ethnicity")
+```
+
+```{r plot2}
+ggplot(data = hiphop_clean, mapping = aes(x = age, fill = sex)) +
+  geom_bar() +
+  labs(x = "Age of Participant", y = "Number of Responses", fill = "Sex")
+```
+
+## Familiar words
+
+For each demographic group listed below, determine which word(s) in this study was(were) the most **and** least familiar on average.
+
+### 11. People below the age of 20
+
+```{r}
+hiphop_clean |>
+  mutate(familiarity = as.numeric(familiarity)) |>
+  filter(age < 20) |>
+  group_by(word) |>
+  summarise(avg = mean(familiarity)) |>
+  arrange(desc(avg))
+```
+
+Most familiar: `off the hook`
+
+Least familiar: `catch the vapors`
+
+### 12. Non-white women
+
+```{r}
+hiphop_clean |>
+  mutate(familiarity = as.numeric(familiarity)) |>
+  filter(sex == "Female" & ethnic == "non-white") |>
+  group_by(word) |>
+  summarise(avg = mean(familiarity)) |>
+  arrange(desc(avg))
+```
+
+Most familiar: `feel me`
+
+Least familiar: `rollie`, `plex`, `dukey rope`, `break someone out`
+
+### 13. White men above the age of 30
+
+```{r}
+hiphop_clean |>
+  mutate(familiarity = as.numeric(familiarity)) |>
+  filter(sex == "Male" & age > 30 & ethnic == "white") |>
+  group_by(word) |>
+  summarise(avg = mean(familiarity)) |>
+  arrange(desc(avg))
+```
+
+Most familiar: `5-0`
+
+Least familiar: `twurk`, `trill`, `sweatbox`, `saditty`, `ay yo trip`, `beezy`, `break someone out`, `catch the vapors`, `crossroads`, `crump`, `dap`, `dollar cab`, `domino`, `duckets`, `face gator`, `fetti`, `finna`, `ghostride`, `good hair`, `grip grain`, `guap`, `humming`, `mail`, `plex`, `rollie`,
+
+Helpful functions: `filter()`, `group_by()`, `summarize()`, `slice_max()`, `slice_min()` \## Study Subjects
+
+A joke among the [Tidy Tuesday](https://www.tidytuesday.com/) community is that Justin Bieber was one of the subjects in this study. Bieber, a white male, from a relatively small town (10,000-60,000 people) in Ontario would have been 17-23 at the time of the study.
+
+### 14. Determine which subject you believe is secretly Bieber, justify your answer.
+
+*Hint: Refer again to the dataset description. There is another clue about Bieber's identity.*
+
+```{r}
+hiphop_clean |>
+  distinct(subj, .keep_all = TRUE) |>
+  filter(sex == "Male" & age > 17 & age < 23 & ethnic == "white" & city > 10000 & city < 60000) 
+```

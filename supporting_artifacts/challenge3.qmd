@@ -1,0 +1,61 @@
+---
+title: "Challenge 3"
+author: "Carson Freedman"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+execute:
+  echo: true
+  messages: false
+  warning: false
+editor: visual
+---
+
+## Data
+
+```{r libs}
+library(tidyverse)
+library(here)
+```
+
+```{r data}
+music <- read_csv(file = here("Week3", "Lab3", "hiphop.csv"))
+```
+
+## Published Comparisons
+
+### Male v Female
+
+```{r}
+music |>
+  select("sex", "intl", "vocal", "classical", "folk", "rock", 
+         "country", "pop", "alternative", "hiphop", "unclassifiable") |>
+  distinct(.keep_all = TRUE) |>
+  group_by(sex) |>
+  summarize(across(.cols = is.numeric, .fns = mean))
+```
+
+Males reported listening to many more **rock artists** compared to females
+
+### White v Non-White
+
+```{r}
+music |>
+  select("ethnic", "intl", "vocal", "classical", "folk", "rock", 
+         "country", "pop", "alternative", "hiphop", "unclassifiable") |>
+  mutate(ethnic = if_else(condition = ethnic == "white", true = "white", 
+                          false = "non-white")) |>
+  distinct(.keep_all = TRUE) |>
+  group_by(ethnic) |>
+  summarize(across(.cols = is.numeric, .fns = mean))
+```
+
+Non-whites reported listening to many more **international artists** compared to whites
+
+## Study Critiques
+
+Concerns with design and context of the study:
+
+1.  The nuances and reality of mixed race people is seemingly ignored, instead they are grouped into one or multiple ethnicities.
+2.  With the data set originating solely from univeristy students skewing predominately young and white, the results gathered from the data set may not accurately represent the truth for those who don't fall in that demographic.

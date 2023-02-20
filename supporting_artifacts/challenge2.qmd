@@ -1,0 +1,389 @@
+---
+title: "Challenge 2"
+author: "Carson Freedman"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+execute:
+  echo: true
+editor: visual
+---
+
+```{r setup}
+
+library(tidyverse)
+library(here)
+library(ggridges)
+library(viridis)
+```
+
+```{r data}
+surveys <- read_csv(file = here("Week2", "Lab2", "surveys.csv"))
+```
+
+# Plot
+
+```{r plot}
+ggplot(data = surveys, mapping = aes(x = weight, y = species)) +
+  geom_density_ridges(mapping = aes(color = genus, fill = genus)) +
+  geom_jitter(size = 0.5, width = 0.1, height = 0.05, alpha = 0.15, 
+              color = "darkseagreen") +
+  scale_color_viridis_d(option = "D", aesthetics = c("color", "fill")) +
+  labs(title = "Weights of Various Rodent Species", x = "Rodent Weight (g)", 
+       y = "Species of Rodent", color = "Rodent Genus", fill = "Rodent Genus")
+```
+
+STAT 331 Statistical Computing in R
+
+Cal Poly Winter 2023 Syllabus
+
+072 TR 9:10am - 11:00am
+
+Textbook: https://r4ds.had.co.nz/
+
+Website: https://canvas.calpoly.edu
+
+In this course, we will learn the foundational skills for programming in R and a variety of skills for working with data. We will then build on these skills to consider how to write programs which are more efficient. Finally, we will apply these skills into a statistical analysis---linear regression.
+
+How will you learn?
+
+In order to learn statistical computing, it's not enough to simply listen to your professor talk about statistical computing --- you must do statistical computing. So, to learn the concepts in this course, you'll be doing a variety of active learning tasks both inside and outside of class:
+
+Before class, you'll complete Preview Activities which will guide you through your first contact with new concepts.
+
+These will involve readings, videos, along with exercises to build your basic skill fluency. For example, you might be asked to read a chapter from the course textbook, watch a few videos discussing some concepts from the chapter, and then asked to complete some preliminary exercises intended to get you started thinking about how to apply the concepts from the chapter in the context of real data.
+
+You'll submit these exercises online, so that class time can be customized based on your understanding. After class, you can reinforce the material through Lab Assignments, which are an opportunity to demonstrate mastery ofIn this course, we will learn the foundational skills for programming in
+
+R and a variety of skills for working with data. We will then build on
+
+these skills to consider how to write programs which are more efficient.
+
+Finally, we will apply these skills into a statistical analysis---linear
+
+regression.
+
+How will you learn?
+
+In this course, we will learn the foundational skills for programming in
+
+R and a variety of skills for working with data. We will then build on
+
+these skills to consider how to write programs which are more efficient.
+
+Finally, we will apply these skills into a statistical analysis---linear
+
+regression.
+
+How will you learn?
+
+In order to learn statistical computing, it's not enough to simply
+
+listen to your professor talk about statistical computing --- you must do
+
+statistical computing. So, to learn the concepts in this course, you'll
+
+be doing a variety of active learning tasks both inside and outside of
+
+class:
+
+Before class,
+
+you'll complete Preview Activities which will guide you through your
+
+first contact with new concepts.
+
+These will involve readings, videos, along with exercises to build your
+
+basic skill fluency. For example, you might be asked to read a chapter
+
+from the course textbook, watch a few videos discussing some concepts
+
+from the chapter, and then asked to complete some preliminary exercises
+
+intended to get you started thinking about how to apply the concepts
+
+from the chapter in the context of real data.
+
+You'll submit these exercises online, so that class time can be
+
+customized based on your understanding.
+
+After class,
+
+you can reinforce the material through Lab Assignments, which are an
+
+opportunity to demonstrate mastery ofIn this course, we will learn the foundational skills for programming in
+
+R and a variety of skills for working with data. We will then build on
+
+these skills to consider how to write programs which are more efficient.
+
+Finally, we will apply these skills into a statistical analysis---linear
+
+regression.
+
+How will you learn?
+
+R and a variety of skills for working with data. We will then build on
+
+these skills to consider how to write programs which are more efficient.
+
+Finally, we will apply these skills into a statistical analysis---linear
+
+regression.
+
+How will you learn?
+
+In order to learn statistical computing, it's not enough to simply
+
+listen to your professor talk about statistical computing --- you must do
+
+statistical computing. So, to learn the concepts in this course, you'll
+
+be doing a variety of active learning tasks both inside and outside of
+
+class:
+
+Before class,
+
+you'll complete Preview Activities which will guide you through your
+
+first contact with new concepts.
+
+These will involve readings, videos, along with exercises to build your
+
+basic skill fluency. For example, you might be asked to read a chapter
+
+from the course textbook, watch a few videos discussing some concepts
+
+from the chapter, and then asked to complete some preliminary exercises
+
+intended to get you started thinking about how to apply the concepts
+
+from the chapter in the context of real data.
+
+You'll submit these exercises online, so that class time can be
+
+customized based on your understanding.
+
+After class,
+
+you can reinforce the material through Lab Assignments, which are an
+
+opportunity to demonstrate mastery ofIn this course, we will learn the foundational skills for programming in
+
+R and a variety of skills for working with data. We will then build on
+
+these skills to consider how to write programs which are more efficient.
+
+Finally, we will apply these skills into a statistical analysis---linear
+
+regression.
+
+How will you learn?
+
+In order to learn statistical computing, it's not enough to simply
+
+listen to your professor talk about statistical computing --- you must do
+
+statistical computing. So, to learn the concepts in this course, you'll
+
+be doing a variety of active learning tasks both inside and outside of
+
+class:
+
+Before class,
+
+you'll complete Preview Activities which will guide you through your
+
+first contact with new concepts.
+
+These will involve readings, videos, along with exercises to build your
+
+basic skill fluency. For example, you might be asked to read a chapter
+
+from the course textbook, watch a few videos discussing some concepts
+
+from the chapter, and then asked to complete some preliminary exercises
+
+intended to get you started thinking about how to apply the concepts
+
+from the chapter in the context of real data.
+
+You'll submit these exercises online, so that class time can be
+
+customized based on your understanding.
+
+After class,
+
+you can reinforce the material throughs in some way. Frequently, you have the choice of what you would like to learn. The only requirement is that you extend your thinking in some (measureable) way. During class, you'll be working with your classmates to complete Practice Activities, which take your Preview Activities a step further. You will collaborate with your team to solve a puzzle, requiring that you accomplish a series of tasks, each of which applies the statistical computing concepts from that week. The purpose of in-class time is for you to be doing statistical computing, with me there to guide you if / when you get lost.
+
+How will you know how you're doing? The grading scheme we'll be using is probably unlike what you've had in previous statistics courses. Instead of the traditional percentage-based system, we will be using Ungrading. Do not let the name mislead you, "ungrading" is a system which privileges the process of revising one's thinking rather than assessing what you know at a specific point in time (e.g., midterm exam). The intent of which is to give you as many chances as you need (within reason) to learn the skills of the course. You're not being graded on how quickly you learn --- only what you have shown you understand by the end of the quarter. Many grades are not final; you'll often have the chance to revise and resubmit your work to improve its quality.
+
+SGN Rubric Successful The solution to the problem is correct, legible, and easy to follow, with all reasoning provided. Any error is trivial. Growing The solution shows growth toward mastering the topic; however, it is incorrect and/or incomplete. Not Assessable Solution is missing or insubstantial, or the solution was attempted using an inappropriate methodology for the problem type.
+
+How will your final grade be decided? This course utilizes a system called "ungrading," where you will be the arbiter of your own grade. It is likely you've never heard of "ungrading," so let me try to define it for you. Ungrading is a form of "grading" in which you will still do work, which is aligned with clearly defined learning standards. But, none of the work gets a grade, or as non-Americans would say a "mark". Instead of a mark, your work is carefully evaluated and gets lots of helpful feedback. You will use this feedback to engage in a feedback loop system, whereby you can revise and resubmit, and get more feedback, and so on until the work is deemed to have met whatever standard is in place. The goal of ungrading is to remove marks from the picture, so you are able to focus your attention on the work itself and engage in the feedback loop. I am removing distractors (marks are distractors) to help you build metacognition and self-evaluation skills, and grow in your learning over time.
+
+One of the four pillars of this grading system is having clearly identified standards, so you know what is expected of you. In this course, there are four dimensions where you will assess your progress against the goals stated for you, these are:
+
+Accomplishment of Learning Targets Evidence of Continued Learning Growth as a Team Member Attention to Personal Goals
+
+You will work on each of these dimensions throughout the course. Periodically, you will be asked to reflect on your learning and discuss how you have grown in each area. Accompanying each reflection will be an estimation of the grade you have earned in the course. You will be provided feedback on each reflection, letting you know if I agree with your assessment, and, if not, where the discrepancies lie. I want you to view your grade as a conversation between you and I.
+
+Let's unpack how you are expected to evaluate yourself in these four dimensions. Accomplishment of Learning Targets Each week, a set of learning targets will be outlined. These learning targets will not exist solely within a given week. You will find that the skills you learn early in the course will be used throughout the course. Whereas, some skills, learned later in the course, will not be used as often.
+
+You can demonstrate proficiency with these skills through three main avenues: Group-based Practice Activities Lab Assignments Challenge Assignments
+
+However, evidence of continued learning can only be demonstrated within individual lab assignments. You can keep track of your progress yourself using this Interactive Checklist. Evidence of Continued Learning Each week, you will be required to complete a lab assignment where you demonstrate your understanding of that week's learning targets in the context of a new dataset. These lab assignments provide two different perspectives of your continued learning. They demonstrate your ability to extend your thinking beyond what you've learned in class. They demonstrate your ability to revise your thinking. Extend Your Thinking Each Lab Assignment will have a Challenge Problem which asks you to extend the skills you've learned in class in a new way. You will often have the choice of what direction you would like to expand your knowledge. There are no specific requirements for how you extend your skills, only that you extend your thinking in some (measureable) way. Revise Your Thinking For the problems in each Lab Assignment, I will give copious written feedback, but I'll also summarize my feedback with a letter on the SGN scale (as discussed previously). To demonstrate your ability to revise your thinking, I encourage you to revise and resubmit any problems marked G or N.
+
+Revisions must include a reflection describing how you revised your thinking when completing your revision. It's not enough to say "\[x\] was wrong, so I fixed it" \-- you have to talk about why you got \[x\] wrong in the first place and what you learned that changed your mind. What do you know now that you didn't know before? Who or what helped you learn? If your revision does not include reflections, I'll ask you to add them. See some examples of really good reflections here \-- they're (mostly) from a statistics class, but I think you'll get the idea. Submit your revision to the same assignment box on Canvas as your original. This helps me keep track of any outstanding revisions each person has.
+
+Revision Submissions --- You are welcome to submit your revisions whenever you wish, however I will dedicate Sunday morning to providing feedback on revisions. Whatever revisions are submitted to Canvas by 8am on Sunday will be considered for that week. Make sure you carefully read the SGN grading rubric, as you are only permitted to submit one Lab Assignment and Challenge Problem each week, and you are required to meet with me before you submit revisions if it is your third attempt or if you received an N on your first attempt. Growth as a Team Member There are two ways you will evaluate your growth as a team member. The first is through your collaboration with your team members. The second is through the code reviews you provide your peers. Collaborative Group Work This course uses collaborative learning to provide a supportive community when initially exploring the concepts associated with each week. On Tuesdays, you will collaborate in assigned teams to complete a Practice Activity. Collaborating on the Practice Activity is more than independently coding each task and asking someone a question when you get stuck. Collaborating is working together with your team to accomplish each question.
+
+Many people are uncomfortable working in a team for a variety of reasons, such as fearing looking dumb, being rejected, or being disrespected. It is my hope that our weekly collaborations will offer opportunities for you to grow as a group member, by becoming more aware of how you interact with others.
+
+During the first week of class, you will be placed in a group of 3-4 students. During Weeks 2-5, you will work with this team on the Practice Activities. To make group collaborations more equitable, I expect for your team to rotate through four "roles" each member will take on. The table below outlines the duties of each role:
+
+Facilitator Manages team progress through the task
+
+Leads discussion Makes sure everyone understands the task Checks in with group members Keeps the group moving forward Recorder / Reporter Manages in-class report
+
+Responsible for organizing and recording answers to the assignment during discussions Compiles a summary of the solutions discussed Sends summary to report editor Report Editor Manages out-of-class report
+
+Asks professor team questions Reviews draft summary provided by reporter Solicits feedback from the team Shares summary with the team Submits final assignment Team Captain Manages team participation
+
+Encourages participation Enforces norms Brings conversation back if it deviates Substitutes for absent roles
+
+Peer Code Review One of my favorite sayings is "Programs must be written for people to read, and only incidentally for machines to execute." Code review has two major benefits, (1) you get feedback on the readability, tidiness, and efficiency of your code, and (2) by reviewing someone else's code you learn more about your own code!
+
+Here are some guidelines and examples of what you should be looking for and how to phrase your peer code reviews.
+
+You hopefully noticed that writing "tidy" and "efficient" code are two of the Learning Targets for this course. To demonstrate proficiency in these targets, you will earn badges from your peers. For each lab assignment, everyone in the class will provide an anonymous review of someone's code. The reviewer will provide feedback on the tidiness and efficiency of the code they are reviewing. I will provide some examples of helpful and unhelpful feedback, to guide your feedback. It's easy to be a jerk when making comments; don't. Think about the comments you would like to receive that would help you improve your code! Be good to each other. Attention to Personal Goals During Week 1 of this course, you will be asked to write down at least three measurable things you hope to get out of this class. There is no specific requirement regarding the "size" of the things you write, just that you are able to "measure" your progress toward accomplishing these goals throughout the course. You will hopefully find that some of your goals align with or build off of other aspects of this course!
+
+When will I write these reflections?
+
+Every three weeks you will submit a essay with reflections which address the following questions:
+
+What learning targets have you demonstrated an understanding of? How have you demonstrated a commitment to continued learning? How have you grown as a team member and leader? How have you contributed to creating a respectful classroom learning community? Are you accomplishing the goals you outlined for yourself at the start of the course? Week 4 Reflection Your first reflection will be submitted at the end of Week 4 (February 5). This will be your first experience writing a narrative about your learning and your accomplishments, so I do not expect for it to be perfect! But, I do expect you to take this process seriously and put honest effort into writing your reflection. Your reflection will also include an assessment of the grade you believe you have earned for the course. Consider this a proposal. Your reflection provides "evidence" in favor of your proposed grade. Similar to your lab assignments, I will provide feedback on your reflection, celebrating your accomplishments and pointing out any places we don't see eye-to-eye. It is possible your grade and my grade do not agree, but that is where the conversation starts! Week 6 Reflection Your second reflection will be submitted at the end of Week 6 (October 30). This will be an identical structure to the reflection you submitted in Week 3, however this reflection is now expected to be accompanied by an initial attempt at compiling pieces for your Final Portfolio. This is beneficial for you in two ways, it helps you (1) not procrastinate, and (2) become familiar with how to connect your reflection with artifacts of your learning. See the Final Portfolio section below for a description of what should be included in your portfolio.
+
+Similar to the Week 3 reflection, this will also include a proposal for the grade you've earned in the course. Your portfolio acts as the "data" to support your proposed grade. Importantly, your proposed grade needs to attend to any comments I provided in your Week 3 reflection.
+
+We will have an in-person, 5-minute meeting to discuss your proposed grade. This will be scheduled on Monday, October 31. Week 10 Reflection Your final reflection will be submitted at the end of Week 10 (December 4). This reflection will accompany the final portfolio you assemble.
+
+We will have in-person, 5 to 7-minute meetings on Tuesday, December 6. Meetings will be held between 8am and 5pm and will be reserved a week in advance. What will my final portfolio look like? Your Final Portfolio will be a collection of artifacts from your work in 331 which demonstrate, (1) your proficiency with the learning targets, (2) your continued learning, and (3) evidence for how you have contributed to the classroom community.
+
+For each learning target, you'll choose your favorite and best work from your lab assignments, pre-course exercises, and practice activities. To save yourself time, try and choose lab assignments which demonstrate your proficiency in as many of the learning targets as possible. For example, if you are selecting an assignment for the "selecting columns" and "filtering rows" learning targets, I would recommend choosing one question where you demonstrate your understanding of both these targets over one problem per target.
+
+Your selection will also include some surrounding discussion, which might include things like: how this work demonstrates your learning; why you chose this work in particular \-- what makes it your favorite, why you think it's your best work, etc.
+
+For evidence of your continued learning, you will (1) choose Challenge assignments which demonstrate evidence of how you extended what you learned in class, and (2) choose problems where you were required to submit revisions. Your revised problems should include a description of how you revised your thinking when completing the revision.
+
+For evidence of your contribution to the classroom community you may include descriptions of how you grew as a team member, screenshots of the peer reviews you completed, and screenshots of how supported your peers through posing / answering questions on Discord, etc.
+
+Instructions for the Final Portfolio can be found here (link).
+
+Your final portfolio will be "submitted" as a GitHub repository. Your repository should look exactly like this template repository (link). You'll put all of your work --- both the artifacts of past work and the responses to the writing prompts --- into one GitHub repository. If you choose for this repository to be public, you only need to provide me with the link to the repository. If you choose for this repository to be private, you will need to add me as a collaborator to your repository. Are there "guidelines" for how I should award myself a grade? At the end of the term, you're going to tell me how you did and thus what grade you earned in the course. This will be done in your Week 10 reflection, to be submitted alongside your Final Portfolio. As I previously stated, you should think of your portfolio as the "evidence" for the grade you propose in your reflection. I will probably agree with you, because you know yourself, your work, and your understanding pretty well. If I don't, we'll talk about it.
+
+Text written in black was generated collaboratively on Thursday, January 26 Text written in red was supplemented by Dr. Theobold
+
+Letter grade Description of work and participation A (Superior) Learning Targets: demonstrate proficiency with all but a few of the learning targets, with some understanding of the ones remaining
+
+Revising Thinking: feedback that is given is consistently incorporated into future assignments, reflect on why feedback was given and what has been learned, the majority of assignments with revisions suggested are completed, prioritizes revising assignments with larger amounts of revisions suggested
+
+Extending Thinking: more often than not goes above and beyond, occasionally makes use of external research (with citations)
+
+Collaborative Group Member: acting on the role given for the week (and not stepping into other roles), patient and respectful, making sure group members are on the same page, always engaged with group work, when available engages with questions posed on Discord by engaging with code supplied to provide guidance / resources
+
+Peer-Code Review: always completes peer reviews, having both encouraging and constructive feedback, done in a timely manner, takes reviews seriously, and always gives feedback based on the style guidelines
+
+B (Good) Like an A but everything is "one notch down."
+
+Learning Targets: demonstrate proficiency with the vast majority of learning targets, with slight understanding of the ones remaining
+
+Revising Thinking: feedback that is given is often incorporated into future assignments, reflect on why feedback was given and what has been learned, some assignments with revisions suggested are completed, prioritizes revising assignments with larger amounts of revisions suggested
+
+Extending Thinking: sporadically goes above and beyond, with a few instances of external research (with citations)
+
+Collaborative Group Member: acting on the role given for the week (and not stepping into other roles), patient and respectful, making sure group members are on the same page, frequently engaged with group work, when available engages with questions posed on Discord with some engagement with code supplied
+
+Peer-Code Review: mostly completes peer reviews, having both encouraging and constructive feedback, mostly done in a timely manner, takes reviews somewhat seriously, and often gives feedback based on the style guidelines
+
+C (Acceptable) Like an A but only half the time.
+
+Learning Targets: demonstrate proficiency with most learning targets, with limited understanding of the ones remaining
+
+Revising Thinking: feedback that is given is often incorporated into future assignments, reflect on why feedback was given and what has been learned, some assignments with revisions suggested are completed, prioritizes revising assignments with larger amounts of revisions suggested
+
+Extending Thinking: rarely goes above and beyond, with very few instances of external research (with citations)
+
+Collaborative Group Member: acting on the role given for the week (and not stepping into other roles), patient and respectful, often disengaged from group work, when available answers questions on Discord with little engagement with code supplied
+
+Peer-Code Review: sometimes completes peer reviews, providing little feedback, rarely done in a timely manner, does not take the reviews seriously, and rarely gives feedback based on the style guidelines
+
+D Let's not be here, but less than half the work of the course.
+
+Learning Targets: demonstrate proficiency with less than half of learning targets
+
+Revising Thinking: feedback that is given is rarely incorporated into future assignments, reflections on what was learned are often incomplete, few assignments with revisions suggested are completed
+
+Extending Thinking: almost never goes above and beyond, with almost no instances of external research (with citations)
+
+Collaborative Group Member: acting on the role given for the week (and not stepping into other roles), patient and respectful, seldom engaged from group work
+
+Peer-Code Review: seldom completes peer reviews, provides no feedback, rarely done in a timely manner, does not take the reviews seriously, and rarely gives feedback based on the style guidelines
+
+F
+
+Learning Targets The following learning targets speak to the big content ideas I'm designing this course for you to learn. I think these are probably exhaustive, and you will find that many of these targets overlap with each other.
+
+Working with Data WD-1: I can import data from a variety of formats (e.g., csv, xlsx, txt, etc.). WD-2: I can select necessary columns from a dataset. WD-3: I can filter rows from a dataframe for a variety of data types (e.g., numeric, integer, character, factor, date). WD-4: I can modify existing variables and create new variables in a dataframe for a variety of data types (e.g., numeric, integer, character, factor, date). WD-5: I can use mutating joins to combine multiple dataframes. WD-6: I can use filtering joins to filter rows from a dataframe. WD-7: I can pivot dataframes from long to wide and visa versa
+
+Reproducibility R-1: I can create professional looking, reproducible analyses using RStudio projects, Quarto documents, and the here package. R-2: I can write well documented and tidy code. R-3: I can write robust programs that are resistant to changes in inputs.
+
+Data Visualization & Summarization DVS-1: I can create visualizations for a variety of variable types (e.g., numeric, character, factor, date) DVS-2: I use plot modifications to make my visualization clear to the reader. DVS-3: I show creativity in my visualizations DVS-4: I can calculate numerical summaries of variables. DVS-5: I can find summaries of variables across multiple groups. DVS-6: I can create tables which make my summaries clear to the reader. DVS-7: I show creativity in my tables.
+
+Program Efficiency PE-1: I can write concise code which does not repeat itself. PE-2: I can write functions to reduce repetition in my code. PE-3:I can use iteration to reduce repetition in my code. PE-4: I can use modern tools when carrying out my analysis.
+
+Data Simulation & Modeling DSM-1: I can simulate data from a variety of probability models. DSM-2: I can fit a linear regression and extract necessary summary measures.
+
+PE-4: The following are some examples of tools I would consider are "modern" - functions which are not superseded - functions which are not deprecated - using the pipe operator to decrease the number of intermediate objects created
+
+R-2: "tidy code" is code which adheres to the tidyverse style guidelines
+
+R2: "well documented" code has elements of the following: - code comments (e.g., \# function to rescale columns between 0 and 1) - code chunk names (e.g., {r rescale-function} ) - sections in Quarto file which describe the process(es) being implemented
+
+R-3: The follow are some examples of code I would consider "robust": - using column names rather than column positions - including function stops when writing functions - using processes that don't depend on you remembering a particular sequence of steps (e.g., arrange then slice versus slice max)
+
+Week 4 Reflection Prompt
+
+Your first reflection will be submitted at the end of this week (February 9). This will be your first experience writing a narrative about your learning and your accomplishments, so I do not expect for it to be perfect! But, I do expect you to take this process seriously and put honest effort into writing your reflection.
+
+Download the template reflection Quarto file here Add your preferred YAML
+
+The downloaded file does not contain an YAML, you need to include your own. This allows you to specify how you would like your rendered HTML to look! The sky is the limit! Reflection Outline
+
+I expect the following to be addressed in your reflection:
+
+What learning targets have you demonstrated an understanding of? How have you demonstrated a commitment to continued learning? How have you grown as a team member and leader? How have you contributed to creating a respectful classroom learning community?
+
+At the beginning of your reflection, you need to state what grade you believe you have earned thus far in STAT 331. Consider this a proposal. Your reflection provides "evidence" in favor of your proposed grade. Your proposal should be based on the grade guidelines we developed together as a class. Length Requirements
+
+I would appreciate it if your reflection is no more than 2-pages double spaced. If your reflection is less than half a page, you haven't written enough. I will only accept HTML, PDF, and Word documents.
+
+Learning Objective Evidence: State the Lab or Challenge assignment where you believe you have demonstrated proficiency with the specified learning target
+
+Working with DataWD-1: Lab 2WD-2: Lab 3WD-3: Lab 3 (integer, character)WD-4: Lab 3 (integer, character, factor), Lab 4 (date)WD-5: Lab 4WD-6: Lab 4WD-7: Lab 4 (only wide)
+
+ReproducibilityR-1: Lab 2, Challenge 2, Lab 3R-2: Lab 2 (code chunk names), Lab 3 (comments)R-3: Challenge 2, Lab 3
+
+Data Visualization & SummarizationDVS-1: Lab 2 (two quantitative variables, two quantitative variables / one categorical variable, one quantitative variable / one categorical variable), Challenge 2, Lab 3 (two quantitative variable / one categorical variable)DVS-2: Lab 2, Challenge 2DVS-3: Challenge 2DVS-4: Lab 3DVS-5: Challenge 3
+
+Program EfficiencyPE-1: Lab 2, Challenge 2, Lab 3PE-4: Lab 2, Lab 3
+
+Revising My Thinking: Lab 2
+
+Extending My Thinking: Challenge 2
+
+Write a short reflection

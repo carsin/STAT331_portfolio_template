@@ -8,7 +8,7 @@
 
 <meta name="author" content="Carson Freedman">
 
-<title>STAT 331 Portfolio</title>
+<title>Challenge 3</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -2608,7 +2608,7 @@ vertical-align: -.125em;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">STAT 331 Portfolio</h1>
+<div class="quarto-title-block"><div><h1 class="title">Challenge 3</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -2629,615 +2629,70 @@ vertical-align: -.125em;
 
 </header>
 
-<p><u><strong>My Grade:</strong></u> I believe my grade equivalent to course work evidenced below to be a B.</p>
-<p><u><strong>Learning Objective Evidence:</strong></u> In the code chunks below, provide code from a Lab or Challenge assignment where you believe you have demonstrated proficiency with the specified learning target. Be sure to specify <strong>where</strong> the code came from (e.g., Lab 4 Question 2).</p>
-<section id="working-with-data" class="level2">
-<h2 class="anchored" data-anchor-id="working-with-data">Working with Data</h2>
-<p><strong>WD-1: I can import data from a <em>variety</em> of formats (e.g., csv, xlsx, txt, etc.).</strong></p>
-<ul>
-<li><code>csv</code></li>
-</ul>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 2, q1</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>surveys <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">&quot;Week2&quot;</span>, <span class="st">&quot;Lab2&quot;</span>, <span class="st">&quot;surveys.csv&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<ul>
-<li><code>xlsx</code></li>
-</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview 2.2, q4</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Code to read in the ages.xlsx data goes here! </span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ages_xlsx <span class="ot">=</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;Week2&quot;</span>, <span class="st">&quot;Preview&quot;</span>, <span class="st">&quot;Ages_Data&quot;</span>, <span class="st">&quot;ages.xlsx&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li><code>txt</code></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview 2.2, q2</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Code to read in the ages_mystery.txt data goes here! </span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ages_mystery <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;Week2&quot;</span>, <span class="st">&quot;Preview&quot;</span>, <span class="st">&quot;Ages_Data&quot;</span>, </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;ages_mystery.txt&quot;</span>), <span class="at">delim =</span> <span class="st">&quot;|&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>WD-2: I can select necessary columns from a dataset.</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 3, q8</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>hiphop_clean <span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(subj, sex, age, ethnic) <span class="sc">|&gt;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(<span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(sex <span class="sc">!=</span> <span class="st">&quot;Female&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(ethnic <span class="sc">==</span> <span class="st">&quot;white&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>WD-3: I can filter rows from a dataframe for a <em>variety</em> of data types (e.g., numeric, integer, character, factor, date).</strong></p>
-<ul>
-<li>numeric</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 3, q11</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>hiphop_clean <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">familiarity =</span> <span class="fu">as.numeric</span>(familiarity)) <span class="sc">|&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&lt;</span> <span class="dv">20</span>) <span class="sc">|&gt;</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(word) <span class="sc">|&gt;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg =</span> <span class="fu">mean</span>(familiarity)) <span class="sc">|&gt;</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>character – specifically a string</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 3, q12</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>hiphop_clean <span class="sc">|&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">familiarity =</span> <span class="fu">as.numeric</span>(familiarity)) <span class="sc">|&gt;</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">&quot;Female&quot;</span> <span class="sc">&amp;</span> ethnic <span class="sc">==</span> <span class="st">&quot;non-white&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(word) <span class="sc">|&gt;</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg =</span> <span class="fu">mean</span>(familiarity)) <span class="sc">|&gt;</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>factor</li>
-</ul>
-<div class="cell">
-
-</div>
-<ul>
-<li>date</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Practice 5, q3</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>thanksgiving <span class="ot">&lt;-</span> <span class="fu">mdy</span>(<span class="st">&quot;November 22nd, 2018&quot;</span>, <span class="at">tz =</span> <span class="st">&quot;America/Los_Angeles&quot;</span>) </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>tg_interval <span class="ot">&lt;-</span> (thanksgiving <span class="sc">-</span> <span class="fu">days</span>(<span class="dv">35</span>)) <span class="sc">%--%</span> (thanksgiving <span class="sc">+</span> <span class="fu">days</span>(<span class="dv">35</span>))</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>suspects <span class="ot">&lt;-</span> suspects <span class="sc">|&gt;</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Time.Spotted <span class="sc">%within%</span> tg_interval)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>WD-4: I can modify existing variables and create new variables in a dataframe for a <em>variety</em> of data types (e.g., numeric, integer, character, factor, date).</strong></p>
-<ul>
-<li>numeric</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 3, q12</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>hiphop_clean <span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">familiarity =</span> <span class="fu">as.numeric</span>(familiarity)) <span class="sc">|&gt;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">&quot;Female&quot;</span> <span class="sc">&amp;</span> ethnic <span class="sc">==</span> <span class="st">&quot;non-white&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(word) <span class="sc">|&gt;</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg =</span> <span class="fu">mean</span>(familiarity)) <span class="sc">|&gt;</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>character – specifically a string</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 3, q7</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>hiphop_clean <span class="ot">&lt;-</span> hiphop_clean <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ethnic =</span> <span class="fu">if_else</span>(<span class="at">condition =</span> ethnic <span class="sc">==</span> <span class="st">&quot;white&quot;</span>, <span class="at">true =</span> <span class="st">&quot;white&quot;</span>, </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">false =</span> <span class="st">&quot;non-white&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>factor</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 5, part 2 q3</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>halfweek_captures <span class="ot">&lt;-</span> surveys <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(day_of_week) <span class="sc">|&gt;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">day_of_week =</span> <span class="fu">fct_collapse</span>(day_of_week, </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;Weekday&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Mon&quot;</span>, <span class="st">&quot;Tue&quot;</span>, <span class="st">&quot;Wed&quot;</span>, <span class="st">&quot;Thu&quot;</span>, <span class="st">&quot;Fri&quot;</span>),</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;Weekend&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Sat&quot;</span>, <span class="st">&quot;Sun&quot;</span>)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>date</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Practice 5, q6</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>epoch <span class="ot">&lt;-</span> <span class="fu">mdy</span>(<span class="st">&quot;January 1st, 1970&quot;</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>suspects <span class="sc">|&gt;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff =</span> <span class="fu">difftime</span>(<span class="at">time1 =</span> Time.Spotted, <span class="at">time2 =</span> epoch, <span class="at">units =</span> <span class="st">&quot;mins&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>WD-5: I can use mutating joins to combine multiple dataframes.</strong></p>
-<ul>
-<li><code>left_join()</code></li>
-</ul>
-<div class="cell">
-
-</div>
-<ul>
-<li><code>right_join()</code></li>
-</ul>
-<div class="cell">
-
-</div>
-<ul>
-<li><code>inner_join()</code></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview 4.3, q1</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(prof_info, prof_course)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li><code>full_join()</code></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview 4.3, q2</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">full_join</span>(prof_info, prof_course)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>WD-6: I can use filtering joins to filter rows from a dataframe.</strong></p>
-<ul>
-<li><code>semi_join()</code></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 4, q6</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>cali_remove <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">region =</span> <span class="fu">c</span>(<span class="st">&quot;LosAngeles&quot;</span>, <span class="st">&quot;SanDiego&quot;</span>, <span class="st">&quot;Sacramento&quot;</span>, </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;SanFrancisco&quot;</span>))</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>diffs <span class="ot">&lt;-</span> avocados <span class="sc">|&gt;</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">semi_join</span>(cali_remove) <span class="sc">|&gt;</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region, type, year) <span class="sc">|&gt;</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">mean</span>(AveragePrice))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li><code>anti_join()</code></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 4, q2</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>regions <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">region =</span> <span class="fu">c</span>(<span class="st">&quot;West&quot;</span>, <span class="st">&quot;GreatLakes&quot;</span>, <span class="st">&quot;Midsouth&quot;</span>, <span class="st">&quot;Plains&quot;</span>, </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;SouthCentral&quot;</span>, <span class="st">&quot;Southeast&quot;</span>, <span class="st">&quot;TotalUS&quot;</span>, </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;NorthernNewEngland&quot;</span>, <span class="st">&quot;Northeast&quot;</span>))</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>avocados <span class="sc">|&gt;</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(regions) <span class="sc">|&gt;</span> <span class="co"># remove regions with filtering join</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">location =</span> region)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>WD-7: I can pivot dataframes from long to wide and visa versa</strong></p>
-<ul>
-<li><code>pivot_longer()</code></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Practice 4, q4</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>pivoted <span class="ot">&lt;-</span> military_clean <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;Spending&quot;</span>, <span class="sc">-</span><span class="fu">c</span>(<span class="st">`</span><span class="at">Country</span><span class="st">`</span>, <span class="st">`</span><span class="at">Notes</span><span class="st">`</span>, <span class="st">`</span><span class="at">Reporting year</span><span class="st">`</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li><code>pivot_wider()</code></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 4, q6</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>diffs <span class="sc">|&gt;</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region, type) <span class="sc">|&gt;</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">price =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">mean(AveragePrice)</span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> type, <span class="at">values_from =</span> price)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>music <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">&quot;Week3&quot;</span>, <span class="st">&quot;Lab3&quot;</span>, <span class="st">&quot;hiphop.csv&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="reproducibility" class="level2">
-<h2 class="anchored" data-anchor-id="reproducibility">Reproducibility</h2>
-<p><strong>R-1: I can create professional looking, reproducible analyses using RStudio projects, Quarto documents, and the here package.</strong></p>
-<p>I’ve done this in the following provided assignments: Lab 2, Challenge 2, Lab 3, Challenge 3, Lab 5 (Revised)</p>
-<p><strong>R-2: I can write well documented and tidy code.</strong></p>
-<ul>
-<li>Example 1
-<ul>
-<li>Named code chunks</li>
-</ul></li>
-</ul>
+<section id="published-comparisons" class="level2">
+<h2 class="anchored" data-anchor-id="published-comparisons">Published Comparisons</h2>
+<section id="male-v-female" class="level3">
+<h3 class="anchored" data-anchor-id="male-v-female">Male v Female</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 2, q6</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#```{r jitter}</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> surveys, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> hindfoot_length)) <span class="sc">+</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">height =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Weight of Rodent (g)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Rodent Hindfoot Length (mm)&quot;</span>)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">#```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>music <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;intl&quot;</span>, <span class="st">&quot;vocal&quot;</span>, <span class="st">&quot;classical&quot;</span>, <span class="st">&quot;folk&quot;</span>, <span class="st">&quot;rock&quot;</span>, </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;country&quot;</span>, <span class="st">&quot;pop&quot;</span>, <span class="st">&quot;alternative&quot;</span>, <span class="st">&quot;hiphop&quot;</span>, <span class="st">&quot;unclassifiable&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(<span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="at">.cols =</span> is.numeric, <span class="at">.fns =</span> mean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 11
+  sex     intl vocal classical  folk  rock country   pop altern…¹ hiphop uncla…²
+  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+1 Female 0.456 0.904     0.772 0.412  1.98   0.746  1.32     2.27   1.65  0.0614
+2 Male   0.265 1.59      0.980 0.408  3.08   0.408  1.14     2.24   1.59  0.0408
+# … with abbreviated variable names ¹​alternative, ²​unclassifiable</code></pre>
 </div>
-<ul>
-<li>Example 2
-<ul>
-<li>Commented pipeline steps</li>
-</ul></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 3, q5</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>hiphop_clean <span class="ot">&lt;-</span> hiphop <span class="sc">|&gt;</span> </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># replace all NA values with zeroes</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> numPreferredArtists<span class="sc">:</span>numOverallArtists, </span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">.fns =</span> <span class="sc">~</span><span class="fu">replace_na</span>(., <span class="at">replace =</span> <span class="dv">0</span>)),</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>         <span class="co"># replace zeroes in city &amp; county cols with NA</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="at">.cols =</span> city<span class="sc">:</span>county, <span class="at">.fns =</span> <span class="sc">~</span><span class="fu">na_if</span>(<span class="at">x =</span> ., <span class="at">y =</span> <span class="dv">0</span>)),</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>         <span class="co"># convert likert scores stored as nums to factors</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">c</span>(<span class="st">&quot;familiarity&quot;</span>, <span class="st">&quot;jayz&quot;</span>, <span class="st">&quot;barkley&quot;</span>, <span class="st">&quot;boondocks&quot;</span>, </span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;monique&quot;</span>, <span class="st">&quot;bieber&quot;</span>), <span class="at">.fns =</span> factor))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>R-3: I can write robust programs that are resistant to changes in inputs.</strong></p>
-<ul>
-<li>Example 1</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Challenge 3, q1</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>music <span class="sc">|&gt;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;intl&quot;</span>, <span class="st">&quot;vocal&quot;</span>, <span class="st">&quot;classical&quot;</span>, <span class="st">&quot;folk&quot;</span>, <span class="st">&quot;rock&quot;</span>, </span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;country&quot;</span>, <span class="st">&quot;pop&quot;</span>, <span class="st">&quot;alternative&quot;</span>, <span class="st">&quot;hiphop&quot;</span>, <span class="st">&quot;unclassifiable&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(<span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="at">.cols =</span> is.numeric, <span class="at">.fns =</span> mean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>Example 2</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 3, q8</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>hiphop_clean <span class="sc">|&gt;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(subj, sex, age, ethnic) <span class="sc">|&gt;</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(<span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(sex <span class="sc">==</span> <span class="st">&quot;Male&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(ethnic <span class="sc">==</span> <span class="st">&quot;non-white&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">|&gt;</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>Males reported listening to many more <strong>rock artists</strong> compared to females</p>
 </section>
-<section id="data-visualization-summarization" class="level2">
-<h2 class="anchored" data-anchor-id="data-visualization-summarization">Data Visualization &amp; Summarization</h2>
-<p><strong>DVS-1: I can create visualizations for a <em>variety</em> of variable types (e.g., numeric, character, factor, date)</strong></p>
-<ul>
-<li>numeric variables</li>
-</ul>
+<section id="white-v-non-white" class="level3">
+<h3 class="anchored" data-anchor-id="white-v-non-white">White v Non-White</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 2, q5</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> surveys, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> hindfoot_length)) <span class="sc">+</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Weight of Rodent (g)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Rodent Hindfoot Length (mm)&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>music <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">&quot;ethnic&quot;</span>, <span class="st">&quot;intl&quot;</span>, <span class="st">&quot;vocal&quot;</span>, <span class="st">&quot;classical&quot;</span>, <span class="st">&quot;folk&quot;</span>, <span class="st">&quot;rock&quot;</span>, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;country&quot;</span>, <span class="st">&quot;pop&quot;</span>, <span class="st">&quot;alternative&quot;</span>, <span class="st">&quot;hiphop&quot;</span>, <span class="st">&quot;unclassifiable&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ethnic =</span> <span class="fu">if_else</span>(<span class="at">condition =</span> ethnic <span class="sc">==</span> <span class="st">&quot;white&quot;</span>, <span class="at">true =</span> <span class="st">&quot;white&quot;</span>, </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">false =</span> <span class="st">&quot;non-white&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(<span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ethnic) <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="at">.cols =</span> is.numeric, <span class="at">.fns =</span> mean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 11
+  ethnic     intl vocal class…¹  folk  rock country   pop alter…² hiphop uncla…³
+  &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+1 non-whi… 1.72   0.688   0.875 0.188  1.09   0.281  1.31    1.28   2.25  0.0938
+2 white    0.0758 1.20    0.818 0.462  2.59   0.742  1.26    2.48   1.48  0.0455
+# … with abbreviated variable names ¹​classical, ²​alternative, ³​unclassifiable</code></pre>
 </div>
-<ul>
-<li>numeric variables and categorical variables</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Challenge 2, q1 &amp; q2</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> surveys, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> species)) <span class="sc">+</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_ridges</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> genus, <span class="at">fill =</span> genus)) <span class="sc">+</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="fl">0.05</span>, <span class="at">alpha =</span> <span class="fl">0.15</span>, </span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;darkseagreen&quot;</span>) <span class="sc">+</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">&quot;D&quot;</span>, <span class="at">aesthetics =</span> <span class="fu">c</span>(<span class="st">&quot;color&quot;</span>, <span class="st">&quot;fill&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Weights of Various Rodent Species&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Rodent Weight (g)&quot;</span>, </span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Species of Rodent&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Rodent Genus&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Rodent Genus&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<ul>
-<li>categorical variables</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 3, q10</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> hiphop_clean, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">fill =</span> ethnic)) <span class="sc">+</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age of Participant&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Number of Responses&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Ethnicity&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>dates</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 5, q2 (revised)</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>mean_weights <span class="ot">&lt;-</span> surveys <span class="sc">|&gt;</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(genus, date) <span class="sc">|&gt;</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">weight =</span> <span class="fu">mean</span>(weight))</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mean_weights, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> weight, </span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">color =</span> genus)) <span class="sc">+</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Weight of Rodent by Species (g)&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>DVS-2: I use plot modifications to make my visualization clear to the reader.</strong></p>
-<ul>
-<li>Example 1</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Challenge 2, q1 &amp; q2</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> surveys, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> species)) <span class="sc">+</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_ridges</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> genus, <span class="at">fill =</span> genus)) <span class="sc">+</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="fl">0.05</span>, <span class="at">alpha =</span> <span class="fl">0.15</span>, </span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;darkseagreen&quot;</span>) <span class="sc">+</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">&quot;D&quot;</span>, <span class="at">aesthetics =</span> <span class="fu">c</span>(<span class="st">&quot;color&quot;</span>, <span class="st">&quot;fill&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Weights of Various Rodent Species&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Rodent Weight (g)&quot;</span>, </span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Species of Rodent&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Rodent Genus&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Rodent Genus&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>Example 2</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 5, q2 (revised)</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> surveys, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight, </span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">y =</span> <span class="fu">fct_reorder</span>(species, weight))) <span class="sc">+</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="fl">0.1</span>, <span class="at">color =</span> <span class="st">&quot;tomato&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.alpha =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Weight&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Weight of Rodent by Genus (g)&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>DVS-3: I show creativity in my visualizations</strong></p>
-<ul>
-<li>Example 1</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Challenge 2, q1 &amp; q2</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> surveys, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> species)) <span class="sc">+</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_ridges</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> genus, <span class="at">fill =</span> genus)) <span class="sc">+</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="fl">0.05</span>, <span class="at">alpha =</span> <span class="fl">0.15</span>, </span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;darkseagreen&quot;</span>) <span class="sc">+</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">&quot;D&quot;</span>, <span class="at">aesthetics =</span> <span class="fu">c</span>(<span class="st">&quot;color&quot;</span>, <span class="st">&quot;fill&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Weights of Various Rodent Species&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Rodent Weight (g)&quot;</span>, </span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Species of Rodent&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Rodent Genus&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Rodent Genus&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>Example 2</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 3, q10</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> hiphop_clean, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age of Participant&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Number of Responses&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Sex&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>DVS-4: I can calculate numerical summaries of variables.</strong></p>
-<ul>
-<li>Example 1</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 3, q12</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>hiphop_clean <span class="sc">|&gt;</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">familiarity =</span> <span class="fu">as.numeric</span>(familiarity)) <span class="sc">|&gt;</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">&quot;Female&quot;</span> <span class="sc">&amp;</span> ethnic <span class="sc">==</span> <span class="st">&quot;non-white&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(word) <span class="sc">|&gt;</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg =</span> <span class="fu">mean</span>(familiarity)) <span class="sc">|&gt;</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>Example 2</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 4, q4</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>regional_avocados <span class="sc">|&gt;</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="at">col =</span> Date, <span class="at">sep =</span> <span class="st">&quot;-&quot;</span>, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;month&quot;</span>, <span class="st">&quot;day&quot;</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">|&gt;</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">sum</span>(<span class="st">`</span><span class="at">Total Volume</span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">sum(\</span><span class="st">`</span>Total Volume\<span class="st">`</span><span class="at">)</span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>DVS-5: I can find summaries of variables across multiple groups.</strong></p>
-<ul>
-<li>Example 1</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 4, q6</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>cali_remove <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">region =</span> <span class="fu">c</span>(<span class="st">&quot;LosAngeles&quot;</span>, <span class="st">&quot;SanDiego&quot;</span>, <span class="st">&quot;Sacramento&quot;</span>, </span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;SanFrancisco&quot;</span>))</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>diffs <span class="ot">&lt;-</span> avocados <span class="sc">|&gt;</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">semi_join</span>(cali_remove) <span class="sc">|&gt;</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region, type, year) <span class="sc">|&gt;</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">mean</span>(AveragePrice))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>Example 2</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 4, q6</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>diffs <span class="sc">|&gt;</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region, type) <span class="sc">|&gt;</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">price =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">mean(AveragePrice)</span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> type, <span class="at">values_from =</span> price)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>DVS-6: I can create tables which make my summaries clear to the reader.</strong></p>
-<ul>
-<li>Example 1</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Challenge 3, q1</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>music <span class="sc">|&gt;</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;intl&quot;</span>, <span class="st">&quot;vocal&quot;</span>, <span class="st">&quot;classical&quot;</span>, <span class="st">&quot;folk&quot;</span>, <span class="st">&quot;rock&quot;</span>, </span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;country&quot;</span>, <span class="st">&quot;pop&quot;</span>, <span class="st">&quot;alternative&quot;</span>, <span class="st">&quot;hiphop&quot;</span>, <span class="st">&quot;unclassifiable&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(<span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="at">.cols =</span> is.numeric, <span class="at">.fns =</span> mean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>Example 2</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 3, q12</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>hiphop_clean <span class="sc">|&gt;</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">familiarity =</span> <span class="fu">as.numeric</span>(familiarity)) <span class="sc">|&gt;</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">&quot;Female&quot;</span> <span class="sc">&amp;</span> ethnic <span class="sc">==</span> <span class="st">&quot;non-white&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(word) <span class="sc">|&gt;</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg =</span> <span class="fu">mean</span>(familiarity)) <span class="sc">|&gt;</span></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>DVS-7: I show creativity in my tables.</strong></p>
-<ul>
-<li>Example 1</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Challenge 3, q2</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>music <span class="sc">|&gt;</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">&quot;ethnic&quot;</span>, <span class="st">&quot;intl&quot;</span>, <span class="st">&quot;vocal&quot;</span>, <span class="st">&quot;classical&quot;</span>, <span class="st">&quot;folk&quot;</span>, <span class="st">&quot;rock&quot;</span>, </span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;country&quot;</span>, <span class="st">&quot;pop&quot;</span>, <span class="st">&quot;alternative&quot;</span>, <span class="st">&quot;hiphop&quot;</span>, <span class="st">&quot;unclassifiable&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ethnic =</span> <span class="fu">if_else</span>(<span class="at">condition =</span> ethnic <span class="sc">==</span> <span class="st">&quot;white&quot;</span>, <span class="at">true =</span> <span class="st">&quot;white&quot;</span>, </span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">false =</span> <span class="st">&quot;non-white&quot;</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(<span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ethnic) <span class="sc">|&gt;</span></span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="at">.cols =</span> is.numeric, <span class="at">.fns =</span> mean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>Example 2</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 3, q12</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>hiphop_clean <span class="sc">|&gt;</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">familiarity =</span> <span class="fu">as.numeric</span>(familiarity)) <span class="sc">|&gt;</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">&quot;Female&quot;</span> <span class="sc">&amp;</span> ethnic <span class="sc">==</span> <span class="st">&quot;non-white&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(word) <span class="sc">|&gt;</span></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg =</span> <span class="fu">mean</span>(familiarity)) <span class="sc">|&gt;</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>Non-whites reported listening to many more <strong>international artists</strong> compared to whites</p>
 </section>
-<section id="program-efficiency" class="level2">
-<h2 class="anchored" data-anchor-id="program-efficiency">Program Efficiency</h2>
-<p><strong>PE-1: I can write concise code which does not repeat itself.</strong></p>
-<ul>
-<li>using a single function call</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 3, q7</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>hiphop_clean <span class="ot">&lt;-</span> hiphop_clean <span class="sc">|&gt;</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ethnic =</span> <span class="fu">if_else</span>(<span class="at">condition =</span> ethnic <span class="sc">==</span> <span class="st">&quot;white&quot;</span>, <span class="at">true =</span> <span class="st">&quot;white&quot;</span>, </span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">false =</span> <span class="st">&quot;non-white&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li><code>across()</code></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 3, q5</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>hiphop_clean <span class="ot">&lt;-</span> hiphop <span class="sc">|&gt;</span> </span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># replace all NA values with zeroes</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> numPreferredArtists<span class="sc">:</span>numOverallArtists, </span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">.fns =</span> <span class="sc">~</span><span class="fu">replace_na</span>(., <span class="at">replace =</span> <span class="dv">0</span>)),</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>         <span class="co"># replace zeroes in city &amp; county cols with NA</span></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="at">.cols =</span> city<span class="sc">:</span>county, <span class="at">.fns =</span> <span class="sc">~</span><span class="fu">na_if</span>(<span class="at">x =</span> ., <span class="at">y =</span> <span class="dv">0</span>)),</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>         <span class="co"># convert likert scores stored as nums to factors</span></span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">c</span>(<span class="st">&quot;familiarity&quot;</span>, <span class="st">&quot;jayz&quot;</span>, <span class="st">&quot;barkley&quot;</span>, <span class="st">&quot;boondocks&quot;</span>, </span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;monique&quot;</span>, <span class="st">&quot;bieber&quot;</span>), <span class="at">.fns =</span> factor))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li><code>map()</code> functions</li>
-</ul>
-<div class="cell">
-
-</div>
-<p><strong>PE-2: I can write functions to reduce repetition in my code.</strong></p>
-<ul>
-<li>Example 1</li>
-</ul>
-<div class="cell">
-
-</div>
-<ul>
-<li>Example 2</li>
-</ul>
-<div class="cell">
-
-</div>
-<p><strong>PE-3:I can use iteration to reduce repetition in my code.</strong></p>
-<ul>
-<li><code>across()</code></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Challenge 3, q2</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>music <span class="sc">|&gt;</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;intl&quot;</span>, <span class="st">&quot;vocal&quot;</span>, <span class="st">&quot;classical&quot;</span>, <span class="st">&quot;folk&quot;</span>, <span class="st">&quot;rock&quot;</span>, </span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;country&quot;</span>, <span class="st">&quot;pop&quot;</span>, <span class="st">&quot;alternative&quot;</span>, <span class="st">&quot;hiphop&quot;</span>, <span class="st">&quot;unclassifiable&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(<span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="at">.cols =</span> is.numeric, <span class="at">.fns =</span> mean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li><code>map()</code> functions (Provide 2 Examples)</li>
-</ul>
-<div class="cell">
-
-</div>
-<div class="cell">
-
-</div>
-<p><strong>PE-4: I can use modern tools when carrying out my analysis.</strong></p>
-<ul>
-<li>Example 1
-<ul>
-<li>Mutate across</li>
-</ul></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lab 3, q5</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>hiphop_clean <span class="ot">&lt;-</span> hiphop <span class="sc">|&gt;</span> </span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># replace all NA values with zeroes</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> numPreferredArtists<span class="sc">:</span>numOverallArtists, </span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">.fns =</span> <span class="sc">~</span><span class="fu">replace_na</span>(., <span class="at">replace =</span> <span class="dv">0</span>)),</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>         <span class="co"># replace zeroes in city &amp; county cols with NA</span></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="at">.cols =</span> city<span class="sc">:</span>county, <span class="at">.fns =</span> <span class="sc">~</span><span class="fu">na_if</span>(<span class="at">x =</span> ., <span class="at">y =</span> <span class="dv">0</span>)),</span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>         <span class="co"># convert likert scores stored as nums to factors</span></span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">c</span>(<span class="st">&quot;familiarity&quot;</span>, <span class="st">&quot;jayz&quot;</span>, <span class="st">&quot;barkley&quot;</span>, <span class="st">&quot;boondocks&quot;</span>, </span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;monique&quot;</span>, <span class="st">&quot;bieber&quot;</span>), <span class="at">.fns =</span> factor))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>Example 2
-<ul>
-<li>Summarize across</li>
-</ul></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Challenge 3, q2</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>music <span class="sc">|&gt;</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;intl&quot;</span>, <span class="st">&quot;vocal&quot;</span>, <span class="st">&quot;classical&quot;</span>, <span class="st">&quot;folk&quot;</span>, <span class="st">&quot;rock&quot;</span>, </span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;country&quot;</span>, <span class="st">&quot;pop&quot;</span>, <span class="st">&quot;alternative&quot;</span>, <span class="st">&quot;hiphop&quot;</span>, <span class="st">&quot;unclassifiable&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(<span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="at">.cols =</span> is.numeric, <span class="at">.fns =</span> mean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
-<section id="data-simulation-modeling" class="level2">
-<h2 class="anchored" data-anchor-id="data-simulation-modeling">Data Simulation &amp; Modeling</h2>
-<p><strong>DSM-1: I can simulate data from a <em>variety</em> of probability models.</strong></p>
-<ul>
-<li>Example 1</li>
-</ul>
-<div class="cell">
+<section id="study-critiques" class="level2">
+<h2 class="anchored" data-anchor-id="study-critiques">Study Critiques</h2>
+<p>Concerns with design and context of the study:</p>
+<ol type="1">
+<li>The nuances and reality of mixed race people is seemingly ignored, instead they are grouped into one or multiple ethnicities.</li>
+<li>With the data set originating solely from univeristy students skewing predominately young and white, the results gathered from the data set may not accurately represent the truth for those who don’t fall in that demographic.</li>
+</ol>
+<!-- -->
 
-</div>
-<ul>
-<li>Example 2</li>
-</ul>
-<div class="cell">
-
-</div>
-<p><strong>DSM-2: I can fit a linear regression and extract necessary summary measures.</strong></p>
-<ul>
-<li>Example 1</li>
-</ul>
-<div class="cell">
-
-</div>
-<ul>
-<li>Example 2</li>
-</ul>
-<div class="cell">
-
-</div>
-</section>
-<section id="revising-my-thinking" class="level2">
-<h2 class="anchored" data-anchor-id="revising-my-thinking">Revising My Thinking</h2>
-<!-- How did you revise your thinking throughout the course? How did you revise your thinking on the code examples you have provided in your portfolio? -->
-<p>I have revised my thinking throughout the course thus far by completing a few revisions on assignments where I did not receive all S grades, such as Lab 1 and Lab 2, as well as Lab 5 which I revised and have used snippets of revised code as evidence for a few in my portfolio. I have also revised my thinking by reading and incorporating feedback received on assignments and peer reviews, as well as lessons learned in class during lecture or when completing practice activities.</p>
-</section>
-<section id="extending-my-thinking" class="level2">
-<h2 class="anchored" data-anchor-id="extending-my-thinking">Extending My Thinking</h2>
-<!-- How did you extended your thinking throughout the course? How did you extend your thinking on the code examples you have provided in your portfolio? -->
-<p>I have extended my thinking by going above and beyond on certain assignments, such as in Challenge 2. In addition, I have also performed external research when completing assignments such as labs and challenges, after which I was able to review and incorporate aspects of my findings into my solutiuon in order to create efficient and clean code.</p>
-</section>
-<section id="peer-support-collaboration" class="level2">
-<h2 class="anchored" data-anchor-id="peer-support-collaboration">Peer Support &amp; Collaboration</h2>
-<!-- Include an image of feedback you gave that you are proud of (either in a peer review or in Discord) -->
-<p><img src="data:image/png;base64,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" class="img-fluid"></p>
 </section>
 
 </main>
@@ -3307,6 +2762,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
   function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
@@ -3374,7 +2880,70 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class>
+<div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;Challenge 3&quot;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> &quot;Carson Freedman&quot;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">    self-contained: true</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">  echo: true</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">  messages: false</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">  warning: false</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="in">```{r libs}</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="in">```{r data}</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>music <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">&quot;Week3&quot;</span>, <span class="st">&quot;Lab3&quot;</span>, <span class="st">&quot;hiphop.csv&quot;</span>))</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Published Comparisons</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="fu">### Male v Female</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>music <span class="sc">|&gt;</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;intl&quot;</span>, <span class="st">&quot;vocal&quot;</span>, <span class="st">&quot;classical&quot;</span>, <span class="st">&quot;folk&quot;</span>, <span class="st">&quot;rock&quot;</span>, </span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;country&quot;</span>, <span class="st">&quot;pop&quot;</span>, <span class="st">&quot;alternative&quot;</span>, <span class="st">&quot;hiphop&quot;</span>, <span class="st">&quot;unclassifiable&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(<span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="at">.cols =</span> is.numeric, <span class="at">.fns =</span> mean))</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>Males reported listening to many more **rock artists** compared to females</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="fu">### White v Non-White</span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>music <span class="sc">|&gt;</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">&quot;ethnic&quot;</span>, <span class="st">&quot;intl&quot;</span>, <span class="st">&quot;vocal&quot;</span>, <span class="st">&quot;classical&quot;</span>, <span class="st">&quot;folk&quot;</span>, <span class="st">&quot;rock&quot;</span>, </span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;country&quot;</span>, <span class="st">&quot;pop&quot;</span>, <span class="st">&quot;alternative&quot;</span>, <span class="st">&quot;hiphop&quot;</span>, <span class="st">&quot;unclassifiable&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ethnic =</span> <span class="fu">if_else</span>(<span class="at">condition =</span> ethnic <span class="sc">==</span> <span class="st">&quot;white&quot;</span>, <span class="at">true =</span> <span class="st">&quot;white&quot;</span>, </span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>                          <span class="at">false =</span> <span class="st">&quot;non-white&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(<span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ethnic) <span class="sc">|&gt;</span></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="at">.cols =</span> is.numeric, <span class="at">.fns =</span> mean))</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>Non-whites reported listening to many more **international artists** compared to whites</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Study Critiques</span></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>Concerns with design and context of the study:</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>The nuances and reality of mixed race people is seemingly ignored, instead they are grouped into one or multiple ethnicities.</span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>With the data set originating solely from univeristy students skewing predominately young and white, the results gathered from the data set may not accurately represent the truth for those who don&#39;t fall in that demographic.</span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 

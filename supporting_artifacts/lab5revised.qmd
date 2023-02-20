@@ -1,0 +1,155 @@
+---
+title: "Lab 5"
+author: "Carson Freedman"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+    cold-fold: true
+execute:
+  echo: true
+  messages: false
+  warning: false
+  error: false
+editor: visual
+---
+
+## Setup
+
+```{r setup}
+library(tidyverse)
+library(forcats)
+library(here)
+
+```
+
+```{r data}
+surveys <- read_csv(file = here("Week2", "Lab2", "surveys.csv"))
+```
+
+## Revisiting Lab 2
+
+### 1
+
+```{r}
+ggplot(data = surveys, mapping = aes(x = weight, 
+                                     y = fct_reorder(species, weight))) +
+  geom_jitter(width = 0.1, height = 0.1, color = "tomato", alpha = 0.2) +
+  geom_boxplot(outlier.alpha = 0) +
+  labs(x = "Weight of Rodent (g)", y = "Species of Rodent")
+```
+
+### 2
+
+```{r}
+ggplot(data = surveys, mapping = aes(x = weight, 
+                                     y = fct_reorder(species, weight))) +
+  geom_jitter(width = 0.1, height = 0.1, color = "tomato", alpha = 0.2) +
+  geom_boxplot(outlier.alpha = 0) +
+  labs(x = "Weight", y = "", title = "Weight of Rodent by Genus (g)")
+```
+
+> Feedback: Are the labels the genus or the species? The weight description is already included on the x-axis. What additional information could you put in your title that gives context to what these data are?
+>
+> Revision: Properly label charts by putting weight units in title
+
+## Time-Series Plots
+
+### 3
+
+```{r}
+ggplot(data = surveys, mapping = aes(x = date, y = weight, color = genus)) +
+  geom_line() +
+  theme_minimal()
+```
+
+### 4
+
+> Feedback: You need to plot the \*\*means\*\*! \
+> Revision: Plot mean weights by grouping rodents by year instead of each date
+
+```{r}
+mean_weights <- surveys |>
+  group_by(genus, year) |>
+  summarize(weight = mean(weight))
+
+ggplot(data = mean_weights, mapping = aes(x = year, y = weight, 
+                                          color = genus)) +
+  geom_line() +
+  theme_minimal() +
+  labs(x = "Year", y = "", title = "Average Weight of Rodent by Genus (g)")
+```
+
+### 5
+
+```{r}
+ggplot(data = mean_weights, mapping = aes(x = year, y = weight, 
+                                          color = fct_reorder(genus, weight, 
+                                                              .desc = TRUE))) +
+  geom_line() +
+  theme_minimal() +
+  labs(x = "Year", y = "", title = "Weight of Rodent by Genus (g)")
+```
+
+### 6
+
+> Feedback: What units are the weights in?
+>
+> Revision: Add rodent weight to title for clarity
+
+```{r}
+ggplot(data = mean_weights, mapping = aes(x = year, y = weight, 
+                                          color = fct_reorder(genus, weight, 
+                                                              .desc = TRUE))) +
+  geom_line() +
+  theme_minimal() +
+  labs(x = "Year", y = "", title = "Weight of Rodent by Genus (g)",
+       color = "Rodent Genus")
+```
+
+## Captures over the Week
+
+### 7
+
+```{r}
+captures <- surveys |>
+  count(day_of_week) |>
+  drop_na() 
+
+ggplot(data = captures, mapping = aes(y = n, x = day_of_week)) +
+  geom_bar(stat = "identity") +
+  labs(y = "", x = "Day", 
+       title = "Number of Rodents Captured by Day of Week")
+```
+
+### 8
+
+> Feedback: How can you use (1) dplyr verbs and (2) forcats functions to convert days \*\*before\*\* you plot?
+>
+> Revision: Reorder weekdays with function from forcats instead of factor()
+
+```{r}
+ggplot(data = captures, mapping = aes(y = n, x = fct_relevel(day_of_week, c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")))) +
+  geom_bar(stat = "identity") +
+  labs(y = "", x = "Day", 
+       title = "Number of Rodents Captured by Day of Week")
+```
+
+### 9
+
+```{r}
+halfweek_captures <- surveys |>
+  count(day_of_week) |>
+  drop_na() |>
+  mutate(
+    day_of_week = fct_collapse(day_of_week, 
+                               "Weekday" = c("Mon", "Tue", "Wed", "Thu", "Fri"),
+                               "Weekend" = c("Sat", "Sun")
+    )
+  )
+
+ggplot(data = halfweek_captures, mapping = aes(y = n, x = day_of_week)) +
+  geom_bar(stat = "identity") +
+  labs(y = "", x = "Part of Week", 
+       title = "Number of Rodents Captured by Part of Week")
+```

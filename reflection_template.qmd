@@ -11,7 +11,7 @@ execute:
   echo: true
 ---
 
-[**My Grade:**]{.underline} I believe my grade equivalent to course work evidenced below to be an \_\_.
+[**My Grade:**]{.underline} I believe my grade equivalent to course work evidenced below to be a B.
 
 [**Learning Objective Evidence:**]{.underline} In the code chunks below, provide code from a Lab or Challenge assignment where you believe you have demonstrated proficiency with the specified learning target. Be sure to specify **where** the code came from (e.g., Lab 4 Question 2).
 
@@ -29,13 +29,18 @@ surveys <- read_csv(file = here("Week2", "Lab2", "surveys.csv"))
 -   `xlsx`
 
 ```{r wd-1-xlsx}
-
+# Preview 2.2, q4
+# Code to read in the ages.xlsx data goes here! 
+ages_xlsx = readxl::read_xlsx(here::here("Week2", "Preview", "Ages_Data", "ages.xlsx"))
 ```
 
 -   `txt`
 
 ```{r wd-1-txt}
-
+# Preview 2.2, q2
+# Code to read in the ages_mystery.txt data goes here! 
+ages_mystery <- read_delim(here::here("Week2", "Preview", "Ages_Data", 
+                                      "ages_mystery.txt"), delim = "|")
 ```
 
 **WD-2: I can select necessary columns from a dataset.**
@@ -85,7 +90,12 @@ hiphop_clean |>
 -   date
 
 ```{r wd-3-date}
+# Practice 5, q3
+thanksgiving <- mdy("November 22nd, 2018", tz = "America/Los_Angeles") 
+tg_interval <- (thanksgiving - days(35)) %--% (thanksgiving + days(35))
 
+suspects <- suspects |>
+  filter(Time.Spotted %within% tg_interval)
 ```
 
 **WD-4: I can modify existing variables and create new variables in a dataframe for a *variety* of data types (e.g., numeric, integer, character, factor, date).**
@@ -129,7 +139,10 @@ halfweek_captures <- surveys |>
 -   date
 
 ```{r wd-4-date}
-
+# Practice 5, q6
+epoch <- mdy("January 1st, 1970")
+suspects |>
+  mutate(diff = difftime(time1 = Time.Spotted, time2 = epoch, units = "mins"))
 ```
 
 **WD-5: I can use mutating joins to combine multiple dataframes.**
@@ -149,14 +162,15 @@ halfweek_captures <- surveys |>
 -   `inner_join()`
 
 ```{r wd-5-inner}
-# Practice activity 3
+# Preview 4.3, q1
 inner_join(prof_info, prof_course)
 ```
 
 -   `full_join()`
 
 ```{r wd-5-full}
-
+# Preview 4.3, q2
+full_join(prof_info, prof_course)
 ```
 
 **WD-6: I can use filtering joins to filter rows from a dataframe.**
@@ -192,6 +206,9 @@ avocados |>
 -   `pivot_longer()`
 
 ```{r wd-7-long}
+# Practice 4, q4
+pivoted <- military_clean |>
+  pivot_longer(names_to = "Year", values_to = "Spending", -c(`Country`, `Notes`, `Reporting year`))
 ```
 
 -   `pivot_wider()`
@@ -208,15 +225,15 @@ diffs |>
 
 **R-1: I can create professional looking, reproducible analyses using RStudio projects, Quarto documents, and the here package.**
 
-I've done this in the following provided assignments:
-Lab 2, Challenge 2, Lab 3
+I've done this in the following provided assignments: Lab 2, Challenge 2, Lab 3, Challenge 3, Lab 5 (Revised)
 
 **R-2: I can write well documented and tidy code.**
 
 -   Example 1
+    -   Named code chunks
 
 ```{r r-2-1}
-# Lab 2, q6 (named code chunks)
+# Lab 2, q6
 #```{r jitter}
 ggplot(data = surveys, mapping = aes(x = weight, y = hindfoot_length)) +
   geom_jitter(alpha = 0.1, width = 0.2, height = 0.2) +
@@ -225,6 +242,7 @@ ggplot(data = surveys, mapping = aes(x = weight, y = hindfoot_length)) +
 ```
 
 -   Example 2
+    -   Commented pipeline steps
 
 ```{r r-2-2}
 # Lab 3, q5
@@ -244,13 +262,26 @@ hiphop_clean <- hiphop |>
 -   Example 1
 
 ```{r r-3-1}
-
+# Challenge 3, q1
+music |>
+  select("sex", "intl", "vocal", "classical", "folk", "rock", 
+         "country", "pop", "alternative", "hiphop", "unclassifiable") |>
+  distinct(.keep_all = TRUE) |>
+  group_by(sex) |>
+  summarize(across(.cols = is.numeric, .fns = mean))
 ```
 
 -   Example 2
 
 ```{r r-3-2}
-
+# Lab 3, q8
+hiphop_clean |>
+  select(subj, sex, age, ethnic) |>
+  distinct(.keep_all = TRUE) |>
+  subset(sex == "Male") |>
+  subset(ethnic == "non-white") |>
+  count() |>
+  summary()
 ```
 
 ## Data Visualization & Summarization
@@ -260,25 +291,47 @@ hiphop_clean <- hiphop |>
 -   numeric variables
 
 ```{r dvs-1-num}
-
+# Lab 2, q5
+ggplot(data = surveys, mapping = aes(x = weight, y = hindfoot_length)) +
+  geom_point(alpha = 0.1) +
+  labs(x = "Weight of Rodent (g)", y = "Rodent Hindfoot Length (mm)")
 ```
 
 -   numeric variables and categorical variables
 
 ```{r dvs-2-num-cat}
-
+# Challenge 2, q1 & q2
+ggplot(data = surveys, mapping = aes(x = weight, y = species)) +
+  geom_density_ridges(mapping = aes(color = genus, fill = genus)) +
+  geom_jitter(size = 0.5, width = 0.1, height = 0.05, alpha = 0.15, 
+              color = "darkseagreen") +
+  scale_color_viridis_d(option = "D", aesthetics = c("color", "fill")) +
+  labs(title = "Weights of Various Rodent Species", x = "Rodent Weight (g)", 
+       y = "Species of Rodent", color = "Rodent Genus", fill = "Rodent Genus")
 ```
 
 -   categorical variables
 
 ```{r dvs-2-cat}
-
+# Lab 3, q10
+ggplot(data = hiphop_clean, mapping = aes(x = age, fill = ethnic)) +
+  geom_bar() +
+  labs(x = "Age of Participant", y = "Number of Responses", fill = "Ethnicity")
 ```
 
 -   dates
 
 ```{r dvs-2-date}
+# Lab 5, q2 (revised)
+mean_weights <- surveys |>
+  group_by(genus, date) |>
+  summarize(weight = mean(weight))
 
+ggplot(data = mean_weights, mapping = aes(x = date, y = weight, 
+                                          color = genus)) +
+  geom_line() +
+  theme_minimal() +
+  labs(x = "Year", y = "", title = "Weight of Rodent by Species (g)")
 ```
 
 **DVS-2: I use plot modifications to make my visualization clear to the reader.**
@@ -286,13 +339,25 @@ hiphop_clean <- hiphop |>
 -   Example 1
 
 ```{r dvs-2-1}
-
+# Challenge 2, q1 & q2
+ggplot(data = surveys, mapping = aes(x = weight, y = species)) +
+  geom_density_ridges(mapping = aes(color = genus, fill = genus)) +
+  geom_jitter(size = 0.5, width = 0.1, height = 0.05, alpha = 0.15, 
+              color = "darkseagreen") +
+  scale_color_viridis_d(option = "D", aesthetics = c("color", "fill")) +
+  labs(title = "Weights of Various Rodent Species", x = "Rodent Weight (g)", 
+       y = "Species of Rodent", color = "Rodent Genus", fill = "Rodent Genus")
 ```
 
 -   Example 2
 
 ```{r dvs-2-2}
-
+# Lab 5, q2 (revised)
+ggplot(data = surveys, mapping = aes(x = weight, 
+                                     y = fct_reorder(species, weight))) +
+  geom_jitter(width = 0.1, height = 0.1, color = "tomato", alpha = 0.2) +
+  geom_boxplot(outlier.alpha = 0) +
+  labs(x = "Weight", y = "", title = "Weight of Rodent by Genus (g)")
 ```
 
 **DVS-3: I show creativity in my visualizations**
@@ -300,13 +365,23 @@ hiphop_clean <- hiphop |>
 -   Example 1
 
 ```{r dvs-3-1}
-
+# Challenge 2, q1 & q2
+ggplot(data = surveys, mapping = aes(x = weight, y = species)) +
+  geom_density_ridges(mapping = aes(color = genus, fill = genus)) +
+  geom_jitter(size = 0.5, width = 0.1, height = 0.05, alpha = 0.15, 
+              color = "darkseagreen") +
+  scale_color_viridis_d(option = "D", aesthetics = c("color", "fill")) +
+  labs(title = "Weights of Various Rodent Species", x = "Rodent Weight (g)", 
+       y = "Species of Rodent", color = "Rodent Genus", fill = "Rodent Genus")
 ```
 
 -   Example 2
 
 ```{r dvs-3-2}
-
+# Lab 3, q10
+ggplot(data = hiphop_clean, mapping = aes(x = age, fill = sex)) +
+  geom_bar() +
+  labs(x = "Age of Participant", y = "Number of Responses", fill = "Sex")
 ```
 
 **DVS-4: I can calculate numerical summaries of variables.**
@@ -314,13 +389,25 @@ hiphop_clean <- hiphop |>
 -   Example 1
 
 ```{r dvs-4-1}
-
+# Lab 3, q12
+hiphop_clean |>
+  mutate(familiarity = as.numeric(familiarity)) |>
+  filter(sex == "Female" & ethnic == "non-white") |>
+  group_by(word) |>
+  summarise(avg = mean(familiarity)) |>
+  arrange(desc(avg))
 ```
 
 -   Example 2
 
 ```{r dvs-4-2}
-
+# Lab 4, q4
+regional_avocados |>
+  separate(col = Date, sep = "-", into = c("year", "month", "day")) |>
+  group_by(month) |>
+  summarise(sum(`Total Volume`)) |>
+  arrange(desc(`sum(\`Total Volume\`)`)) |>
+  slice_head()
 ```
 
 **DVS-5: I can find summaries of variables across multiple groups.**
@@ -328,13 +415,23 @@ hiphop_clean <- hiphop |>
 -   Example 1
 
 ```{r dvs-5-1}
-
+# Lab 4, q6
+cali_remove <- tibble(region = c("LosAngeles", "SanDiego", "Sacramento", 
+                                  "SanFrancisco"))
+diffs <- avocados |>
+  semi_join(cali_remove) |>
+  group_by(region, type, year) |>
+  summarize(mean(AveragePrice))
 ```
 
 -   Example 2
 
 ```{r dvs-5-2}
-
+# Lab 4, q6
+diffs |>
+  group_by(region, type) |>
+  summarize(price = mean(`mean(AveragePrice)`)) |>
+  pivot_wider(names_from = type, values_from = price)
 ```
 
 **DVS-6: I can create tables which make my summaries clear to the reader.**
@@ -342,13 +439,25 @@ hiphop_clean <- hiphop |>
 -   Example 1
 
 ```{r dvs-6-1}
-
+# Challenge 3, q1
+music |>
+  select("sex", "intl", "vocal", "classical", "folk", "rock", 
+         "country", "pop", "alternative", "hiphop", "unclassifiable") |>
+  distinct(.keep_all = TRUE) |>
+  group_by(sex) |>
+  summarize(across(.cols = is.numeric, .fns = mean))
 ```
 
 -   Example 2
 
 ```{r dvs-6-2}
-
+# Lab 3, q12
+hiphop_clean |>
+  mutate(familiarity = as.numeric(familiarity)) |>
+  filter(sex == "Female" & ethnic == "non-white") |>
+  group_by(word) |>
+  summarise(avg = mean(familiarity)) |>
+  arrange(desc(avg))
 ```
 
 **DVS-7: I show creativity in my tables.**
@@ -356,13 +465,27 @@ hiphop_clean <- hiphop |>
 -   Example 1
 
 ```{r dvs-7-1}
-
+# Challenge 3, q2
+music |>
+  select("ethnic", "intl", "vocal", "classical", "folk", "rock", 
+         "country", "pop", "alternative", "hiphop", "unclassifiable") |>
+  mutate(ethnic = if_else(condition = ethnic == "white", true = "white", 
+                          false = "non-white")) |>
+  distinct(.keep_all = TRUE) |>
+  group_by(ethnic) |>
+  summarize(across(.cols = is.numeric, .fns = mean))
 ```
 
 -   Example 2
 
 ```{r dvs-7-2}
-
+# Lab 3, q12
+hiphop_clean |>
+  mutate(familiarity = as.numeric(familiarity)) |>
+  filter(sex == "Female" & ethnic == "non-white") |>
+  group_by(word) |>
+  summarise(avg = mean(familiarity)) |>
+  arrange(desc(avg))
 ```
 
 ## Program Efficiency
@@ -372,13 +495,25 @@ hiphop_clean <- hiphop |>
 -   using a single function call
 
 ```{r pe-1-one-call}
-
+# Lab 3, q7
+hiphop_clean <- hiphop_clean |>
+  mutate(ethnic = if_else(condition = ethnic == "white", true = "white", 
+                          false = "non-white"))
 ```
 
 -   `across()`
 
 ```{r pe-1-across}
-
+# Lab 3, q5
+hiphop_clean <- hiphop |> 
+  # replace all NA values with zeroes
+  mutate(across(.cols = numPreferredArtists:numOverallArtists, 
+                .fns = ~replace_na(., replace = 0)),
+         # replace zeroes in city & county cols with NA
+         across(.cols = city:county, .fns = ~na_if(x = ., y = 0)),
+         # convert likert scores stored as nums to factors
+         across(.cols = c("familiarity", "jayz", "barkley", "boondocks", 
+                          "monique", "bieber"), .fns = factor))
 ```
 
 -   `map()` functions
@@ -406,7 +541,13 @@ hiphop_clean <- hiphop |>
 -   `across()`
 
 ```{r pe-3-across}
-
+# Challenge 3, q2
+music |>
+  select("sex", "intl", "vocal", "classical", "folk", "rock", 
+         "country", "pop", "alternative", "hiphop", "unclassifiable") |>
+  distinct(.keep_all = TRUE) |>
+  group_by(sex) |>
+  summarize(across(.cols = is.numeric, .fns = mean))
 ```
 
 -   `map()` functions (Provide 2 Examples)
@@ -422,15 +563,32 @@ hiphop_clean <- hiphop |>
 **PE-4: I can use modern tools when carrying out my analysis.**
 
 -   Example 1
+    -   Mutate across
 
 ```{r pe-4-1}
-
+# Lab 3, q5
+hiphop_clean <- hiphop |> 
+  # replace all NA values with zeroes
+  mutate(across(.cols = numPreferredArtists:numOverallArtists, 
+                .fns = ~replace_na(., replace = 0)),
+         # replace zeroes in city & county cols with NA
+         across(.cols = city:county, .fns = ~na_if(x = ., y = 0)),
+         # convert likert scores stored as nums to factors
+         across(.cols = c("familiarity", "jayz", "barkley", "boondocks", 
+                          "monique", "bieber"), .fns = factor))
 ```
 
 -   Example 2
+    -   Summarize across
 
 ```{r pe-4-2}
-
+# Challenge 3, q2
+music |>
+  select("sex", "intl", "vocal", "classical", "folk", "rock", 
+         "country", "pop", "alternative", "hiphop", "unclassifiable") |>
+  distinct(.keep_all = TRUE) |>
+  group_by(sex) |>
+  summarize(across(.cols = is.numeric, .fns = mean))
 ```
 
 ## Data Simulation & Modeling
@@ -467,10 +625,16 @@ hiphop_clean <- hiphop |>
 
 <!-- How did you revise your thinking throughout the course? How did you revise your thinking on the code examples you have provided in your portfolio? -->
 
+I have revised my thinking throughout the course thus far by completing a few revisions on assignments where I did not receive all S grades, such as Lab 1 and Lab 2, as well as Lab 5 which I revised and have used snippets of revised code as evidence for a few in my portfolio. I have also revised my thinking by reading and incorporating feedback received on assignments and peer reviews, as well as lessons learned in class during lecture or when completing practice activities.
+
 ## Extending My Thinking
 
 <!-- How did you extended your thinking throughout the course? How did you extend your thinking on the code examples you have provided in your portfolio? -->
 
+I have extended my thinking by going above and beyond on certain assignments, such as in Challenge 2. In addition, I have also performed external research when completing assignments such as labs and challenges, after which I was able to review and incorporate aspects of my findings into my solutiuon in order to create efficient and clean code.
+
 ## Peer Support & Collaboration
 
 <!-- Include an image of feedback you gave that you are proud of (either in a peer review or in Discord) -->
+
+![](2023-02-19.png)
