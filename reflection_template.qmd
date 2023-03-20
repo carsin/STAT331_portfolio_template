@@ -69,6 +69,14 @@ hiphop_clean |>
   arrange(desc(avg))
 ```
 
+-   integer
+
+```{r wd-3-integer}
+# Practice Activity 9.2, q3
+tibble(val = my_weights) |>
+  filter(val < 4532) 
+```
+
 -   character -- specifically a string
 
 ```{r wd-3-string}
@@ -84,7 +92,14 @@ hiphop_clean |>
 -   factor
 
 ```{r wd-3-factor}
-
+# Lab 8
+names |>
+  group_by(Name, Year) |>
+  filter(Name %in% c("Allan", "Allen", "Alan")) |>
+  summarize(Total = sum(Count)) |>
+  ggplot(mapping = aes(x = Year, y = Total, fill = Name, color = Name)) +
+  geom_col() +
+  lims(x = c(1996, 2014))
 ```
 
 -   date
@@ -112,13 +127,29 @@ hiphop_clean |>
   arrange(desc(avg))
 ```
 
+-   integer
+
+```{r wd-4-integer}
+# Lab 9, q10
+names |>
+  filter(Name == "Allan" | Name == "Allen" | Name == "Alan", Year == 2000,
+         State == "PA" | State == "CA") |>
+  group_by(State) |>
+  count(Name, wt = Count) |>
+  mutate(prop = n / sum(n)) |>
+  select(-n) |> 
+  pivot_wider(names_from = Name, values_from = prop)
+```
+
 -   character -- specifically a string
 
 ```{r wd-4-string}
-# Lab 3, q7
-hiphop_clean <- hiphop_clean |>
-  mutate(ethnic = if_else(condition = ethnic == "white", true = "white", 
-                          false = "non-white"))
+# Lab 8, step 4
+xmas2 <- xmas %>%
+  mutate(Full.Phrase = pmap_chr(.l = list(Day, Day.in.Words, Gift.Item, Verb, 
+                                          Adjective, Location), 
+                                .f = make_phrase)
+        )
 ```
 
 -   factor
@@ -208,7 +239,7 @@ avocados |>
 ```{r wd-7-long}
 # Practice 4, q4
 pivoted <- military_clean |>
-  pivot_longer(names_to = "Year", values_to = "Spending", -c(`Country`, `Notes`, `Reporting year`))
+  pivot_longer(names_to = "Year", values_to = "Spending", .cols = -c(`Country`, `Notes`, `Reporting year`))
 ```
 
 -   `pivot_wider()`
@@ -262,26 +293,21 @@ hiphop_clean <- hiphop |>
 -   Example 1
 
 ```{r r-3-1}
-# Challenge 3, q1
-music |>
-  select("sex", "intl", "vocal", "classical", "folk", "rock", 
-         "country", "pop", "alternative", "hiphop", "unclassifiable") |>
-  distinct(.keep_all = TRUE) |>
-  group_by(sex) |>
-  summarize(across(.cols = is.numeric, .fns = mean))
+# Lab 7, q2
+grouped_fish <- fish |>
+  group_by(year, section, trip) |>
+  summarize(across(everything(), ~ sum(is.na(.x))))
 ```
 
 -   Example 2
 
 ```{r r-3-2}
-# Lab 3, q8
-hiphop_clean |>
-  select(subj, sex, age, ethnic) |>
-  distinct(.keep_all = TRUE) |>
-  subset(sex == "Male") |>
-  subset(ethnic == "non-white") |>
-  count() |>
-  summary()
+# Lab 8, step 4
+xmas2 <- xmas %>%
+  mutate(Full.Phrase = pmap_chr(.l = list(Day, Day.in.Words, Gift.Item, Verb, 
+                                          Adjective, Location), 
+                                .f = make_phrase)
+        )
 ```
 
 ## Data Visualization & Summarization
@@ -352,12 +378,27 @@ ggplot(data = surveys, mapping = aes(x = weight, y = species)) +
 -   Example 2
 
 ```{r dvs-2-2}
-# Lab 5, q2 (revised)
-ggplot(data = surveys, mapping = aes(x = weight, 
-                                     y = fct_reorder(species, weight))) +
-  geom_jitter(width = 0.1, height = 0.1, color = "tomato", alpha = 0.2) +
-  geom_boxplot(outlier.alpha = 0) +
-  labs(x = "Weight", y = "", title = "Weight of Rodent by Genus (g)")
+# Challenge 7, q3
+fish |>
+  group_by(year, species) |>
+  summarize(condition = mean(condition, na.rm = TRUE)) |>
+  ggplot(mapping = aes(x = as.factor(year), y = condition)) +
+  geom_point(position = "jitter", mapping = aes(fill = species, color = species)) +
+  lims(y = c(0, 0.05)) +
+  scale_fill_brewer(palette = "Paired") +
+  labs(title = str_c("Condition of Blackfoot River Trout"),
+      subtitle = str_c("by species: 
+                       <span style = 'color:#f8766d'>**Brown**</span>,
+                       <span style = 'color:#00bfc4'>**Rainbow**</span>,
+                       <span style = 'color:#7cae00'>**Bull**</span>,
+                       <span style = 'color:#c77cff'>**WCT**</span>"
+                      ),
+      x = "Year of Observation",
+      y = "",
+    ) +
+  theme(plot.title = element_markdown(size = 16),
+        plot.subtitle = element_markdown(size = 12),
+        legend.position = "none")
 ```
 
 **DVS-3: I show creativity in my visualizations**
@@ -378,10 +419,27 @@ ggplot(data = surveys, mapping = aes(x = weight, y = species)) +
 -   Example 2
 
 ```{r dvs-3-2}
-# Lab 3, q10
-ggplot(data = hiphop_clean, mapping = aes(x = age, fill = sex)) +
-  geom_bar() +
-  labs(x = "Age of Participant", y = "Number of Responses", fill = "Sex")
+# Challenge 7, q3
+fish |>
+  group_by(year, species) |>
+  summarize(condition = mean(condition, na.rm = TRUE)) |>
+  ggplot(mapping = aes(x = as.factor(year), y = condition)) +
+  geom_point(position = "jitter", mapping = aes(fill = species, color = species)) +
+  lims(y = c(0, 0.05)) +
+  scale_fill_brewer(palette = "Paired") +
+  labs(title = str_c("Condition of Blackfoot River Trout"),
+      subtitle = str_c("by species: 
+                       <span style = 'color:#f8766d'>**Brown**</span>,
+                       <span style = 'color:#00bfc4'>**Rainbow**</span>,
+                       <span style = 'color:#7cae00'>**Bull**</span>,
+                       <span style = 'color:#c77cff'>**WCT**</span>"
+                      ),
+      x = "Year of Observation",
+      y = "",
+    ) +
+  theme(plot.title = element_markdown(size = 16),
+        plot.subtitle = element_markdown(size = 12),
+        legend.position = "none")
 ```
 
 **DVS-4: I can calculate numerical summaries of variables.**
@@ -394,20 +452,18 @@ hiphop_clean |>
   mutate(familiarity = as.numeric(familiarity)) |>
   filter(sex == "Female" & ethnic == "non-white") |>
   group_by(word) |>
-  summarise(avg = mean(familiarity)) |>
+  summarize(avg = mean(familiarity)) |>
   arrange(desc(avg))
 ```
 
 -   Example 2
 
 ```{r dvs-4-2}
-# Lab 4, q4
-regional_avocados |>
-  separate(col = Date, sep = "-", into = c("year", "month", "day")) |>
-  group_by(month) |>
-  summarise(sum(`Total Volume`)) |>
-  arrange(desc(`sum(\`Total Volume\`)`)) |>
-  slice_head()
+# Lab 9, q1
+names |>
+  group_by(State, Gender) |>
+  filter(Name == "Allison") |>
+  summarize(total = sum(Count))
 ```
 
 **DVS-5: I can find summaries of variables across multiple groups.**
@@ -439,25 +495,33 @@ diffs |>
 -   Example 1
 
 ```{r dvs-6-1}
-# Challenge 3, q1
-music |>
-  select("sex", "intl", "vocal", "classical", "folk", "rock", 
-         "country", "pop", "alternative", "hiphop", "unclassifiable") |>
-  distinct(.keep_all = TRUE) |>
-  group_by(sex) |>
-  summarize(across(.cols = is.numeric, .fns = mean))
+# Challenge 9, q9
+names |>
+  filter(Name == "Allan" | Name == "Allen" | Name == "Alan", Year == 2000,
+         State == "PA" | State == "CA") |>
+  group_by(Name, State) |>
+  summarize(Count = sum(Count)) |>
+  pivot_wider(names_from = Name, values_from = Count) |>
+  kable(format = "html", col.names = c('State', 'Alans', 'Allans', 'Allens'),
+        caption = "Number of Babies Named a Variation of 'Allan' in CA & PA") |>
+  kable_material(c("striped", "hover"))
 ```
 
 -   Example 2
 
 ```{r dvs-6-2}
-# Lab 3, q12
-hiphop_clean |>
-  mutate(familiarity = as.numeric(familiarity)) |>
-  filter(sex == "Female" & ethnic == "non-white") |>
-  group_by(word) |>
-  summarise(avg = mean(familiarity)) |>
-  arrange(desc(avg))
+# Challenge 9, q10
+names |>
+  filter(Name == "Allan" | Name == "Allen" | Name == "Alan", Year == 2000,
+         State == "PA" | State == "CA") |>
+  group_by(State) |>
+  count(Name, wt = Count) |>
+  mutate(prop = n / sum(n)) |>
+  select(-n) |> 
+  pivot_wider(names_from = Name, values_from = prop) |>
+  kable(format = "html", col.names = c('State', 'Alan', 'Allan', 'Allen'),
+        caption = "Proportion of Babies Named a Variation of 'Allan' in CA & PA") |>
+  kable_material(c("striped", "hover"))
 ```
 
 **DVS-7: I show creativity in my tables.**
@@ -465,27 +529,33 @@ hiphop_clean |>
 -   Example 1
 
 ```{r dvs-7-1}
-# Challenge 3, q2
-music |>
-  select("ethnic", "intl", "vocal", "classical", "folk", "rock", 
-         "country", "pop", "alternative", "hiphop", "unclassifiable") |>
-  mutate(ethnic = if_else(condition = ethnic == "white", true = "white", 
-                          false = "non-white")) |>
-  distinct(.keep_all = TRUE) |>
-  group_by(ethnic) |>
-  summarize(across(.cols = is.numeric, .fns = mean))
+# Challenge 9, q9
+names |>
+  filter(Name == "Allan" | Name == "Allen" | Name == "Alan", Year == 2000,
+         State == "PA" | State == "CA") |>
+  group_by(Name, State) |>
+  summarize(Count = sum(Count)) |>
+  pivot_wider(names_from = Name, values_from = Count) |>
+  kable(format = "html", col.names = c('State', 'Alans', 'Allans', 'Allens'),
+        caption = "Number of Babies Named a Variation of 'Allan' in CA & PA") |>
+  kable_material(c("striped", "hover"))
 ```
 
 -   Example 2
 
 ```{r dvs-7-2}
-# Lab 3, q12
-hiphop_clean |>
-  mutate(familiarity = as.numeric(familiarity)) |>
-  filter(sex == "Female" & ethnic == "non-white") |>
-  group_by(word) |>
-  summarise(avg = mean(familiarity)) |>
-  arrange(desc(avg))
+# Challenge 9, q10
+names |>
+  filter(Name == "Allan" | Name == "Allen" | Name == "Alan", Year == 2000,
+         State == "PA" | State == "CA") |>
+  group_by(State) |>
+  count(Name, wt = Count) |>
+  mutate(prop = n / sum(n)) |>
+  select(-n) |> 
+  pivot_wider(names_from = Name, values_from = prop) |>
+  kable(format = "html", col.names = c('State', 'Alan', 'Allan', 'Allen'),
+        caption = "Proportion of Babies Named a Variation of 'Allan' in CA & PA") |>
+  kable_material(c("striped", "hover"))
 ```
 
 ## Program Efficiency
@@ -495,31 +565,41 @@ hiphop_clean |>
 -   using a single function call
 
 ```{r pe-1-one-call}
-# Lab 3, q7
-hiphop_clean <- hiphop_clean |>
-  mutate(ethnic = if_else(condition = ethnic == "white", true = "white", 
-                          false = "non-white"))
+# Challenge 7, q1
+remove_unreasonable <- function(vec, min, max) {
+  case_when(
+    vec < min ~ NA,
+    vec > max ~ NA,
+    .default = vec
+  )
+}
 ```
 
 -   `across()`
 
 ```{r pe-1-across}
-# Lab 3, q5
-hiphop_clean <- hiphop |> 
-  # replace all NA values with zeroes
-  mutate(across(.cols = numPreferredArtists:numOverallArtists, 
-                .fns = ~replace_na(., replace = 0)),
-         # replace zeroes in city & county cols with NA
-         across(.cols = city:county, .fns = ~na_if(x = ., y = 0)),
-         # convert likert scores stored as nums to factors
-         across(.cols = c("familiarity", "jayz", "barkley", "boondocks", 
-                          "monique", "bieber"), .fns = factor))
+# Lab 7, q1
+fish |>
+  summarize(across(everything(), .fns = ~sum(is.na(.x))))
 ```
 
 -   `map()` functions
 
 ```{r pe-1-map-1}
+# Lab 8, step 4
+xmas2 <- xmas %>%
+  mutate(Full.Phrase = pmap_chr(.l = list(Day, Day.in.Words, Gift.Item, Verb, 
+                                          Adjective, Location), 
+                                .f = make_phrase)
+         )
 
+sing_song <- function() {
+  map_chr(1:12, ~ sing_day(xmas2, .x, Full.Phrase)) |>
+    str_flatten(collapse = "\n\n") |>
+    cat()
+}
+
+sing_song()
 ```
 
 **PE-2: I can write functions to reduce repetition in my code.**
@@ -527,13 +607,44 @@ hiphop_clean <- hiphop |>
 -   Example 1
 
 ```{r pe2-1}
-
+# Lab 8, step 3
+sing_day <- function(dataset, line, phrase_col) {
+  # Step 1: Setup the intro line
+  # Hint: You need to convert a number (e.g., 1) to a word (e.g., first)
+  num_word <- ordinal(line)
+  intro <- glue("On the {num_word} day of Christmas, my true love sent")
+  
+  # Step 2: Sing the gift phrases
+  phrases <- dataset |>
+    pull( {{phrase_col}} )
+  # get the necessary lines in reverse order
+  phrases <- rev(phrases[1:line])
+  # add 'and' and add period to end
+  if (line != 1) { # only add and after first day
+    and <- "and "
+  } else {
+    and <- ""
+  }
+  phrases[length(phrases)] <- glue("{and}{phrases[length(phrases)]}.")
+  # separate with newlines and add comma
+  phrases <- glue_collapse(phrases, sep =",\n")
+  # put it together
+  phrase <- glue("{intro} to me:\n{phrases}")
+  return(phrase)
+}
 ```
 
 -   Example 2
 
 ```{r pe2-2}
-
+# Challenge 7, q1
+remove_unreasonable <- function(vec, min, max) {
+  case_when(
+    vec < min ~ NA,
+    vec > max ~ NA,
+    .default = vec
+  )
+}
 ```
 
 **PE-3:I can use iteration to reduce repetition in my code.**
@@ -541,23 +652,29 @@ hiphop_clean <- hiphop |>
 -   `across()`
 
 ```{r pe-3-across}
-# Challenge 3, q2
-music |>
-  select("sex", "intl", "vocal", "classical", "folk", "rock", 
-         "country", "pop", "alternative", "hiphop", "unclassifiable") |>
-  distinct(.keep_all = TRUE) |>
-  group_by(sex) |>
-  summarize(across(.cols = is.numeric, .fns = mean))
+# Lab 7, q1
+fish |>
+  summarize(across(everything(), .fns = ~sum(is.na(.x))))
 ```
 
 -   `map()` functions (Provide 2 Examples)
 
 ```{r pe-3-map-1}
-
+# Lab 8, step 4
+xmas2 <- xmas %>%
+  mutate(Full.Phrase = pmap_chr(.l = list(Day, Day.in.Words, Gift.Item, Verb, 
+                                          Adjective, Location), 
+                                .f = make_phrase)
+        )
 ```
 
 ```{r pe-3-map-2}
-
+# Lab 8, step 4
+sing_song <- function() {
+  map_chr(1:12, ~ sing_day(xmas2, .x, Full.Phrase)) |>
+    str_flatten(collapse = "\n\n") |>
+    cat()
+}
 ```
 
 **PE-4: I can use modern tools when carrying out my analysis.**
@@ -598,13 +715,22 @@ music |>
 -   Example 1
 
 ```{r dsm-1-1}
-
+# Practice Activity 9.2, q1
+trombone_weights <- qnorm(.1, mean = 4.6, sd = 0.8)
 ```
 
 -   Example 2
 
 ```{r dsm-1-2}
-
+# Practice Activity 9.2, q3
+music_man <- function(n_tromb, n_cor, n_reed){
+  
+  trombones <- rnorm(n_tromb, mean = 4.6, sd = 0.8)
+  cornets <- runif(n_cor, min = 1.5, max = 3.5)
+  reeds <- rchisq(n_reed, df = 4)
+  
+  return(sum(trombones) + sum(cornets) + sum(reeds))
+}
 ```
 
 **DSM-2: I can fit a linear regression and extract necessary summary measures.**
@@ -612,13 +738,19 @@ music |>
 -   Example 1
 
 ```{r dsm-2-1}
-
+# Practice Activity 9.1, q1
+lm(weight_after ~ weight_before, data = animal) |>
+  broom::augment() |>
+  ggplot(mapping = aes(y = .resid, x = .fitted)) +
+  geom_point()
 ```
 
 -   Example 2
 
 ```{r dsm-2-2}
-
+# Lab 9, q4
+linear_model <- lm(Total ~ Year, data = allison_f)
+broom::tidy(linear_model)
 ```
 
 ## Revising My Thinking
@@ -637,4 +769,4 @@ I have extended my thinking by going above and beyond on certain assignments, su
 
 <!-- Include an image of feedback you gave that you are proud of (either in a peer review or in Discord) -->
 
-![](2023-02-19.png)
+![](image/2023-02-19.png)

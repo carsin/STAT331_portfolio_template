@@ -143,7 +143,7 @@ Each of these pieces form the three required arguments to the `pivot_longer()` f
 
 ```{r}
 pivoted <- military_clean |>
-  pivot_longer(names_to = "Year", values_to = "Spending", -c(`Country`, `Notes`, `Reporting year`))
+  pivot_longer(names_to = "Year", values_to = "Spending", .cols = -c(`Country`, `Notes`, `Reporting year`))
 ```
 
 ## Data Visualization Exploration

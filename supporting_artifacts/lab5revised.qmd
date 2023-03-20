@@ -20,7 +20,6 @@ editor: visual
 library(tidyverse)
 library(forcats)
 library(here)
-
 ```
 
 ```{r data}
@@ -65,7 +64,7 @@ ggplot(data = surveys, mapping = aes(x = date, y = weight, color = genus)) +
 
 ### 4
 
-> Feedback: You need to plot the \*\*means\*\*! \
+> Feedback: You need to plot the \*\*means\*\*!\
 > Revision: Plot mean weights by grouping rodents by year instead of each date
 
 ```{r}
