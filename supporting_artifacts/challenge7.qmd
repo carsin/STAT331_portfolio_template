@@ -1,0 +1,73 @@
+---
+title: "Challenge 7"
+author: "Carson Freedman"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+    code-fold: true
+execute:
+  echo: true
+  messages: false
+  warning: false
+  error: false
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(here)
+library(ggtext)
+
+fish <- read_csv(file = here("Week7", "Lab7", "BlackfootFish.csv"))
+```
+
+## 1
+
+```{r fun1}
+remove_unreasonable <- function(vec, min, max) {
+  case_when(
+    vec < min ~ NA,
+    vec > max ~ NA,
+    .default = vec
+  )
+}
+
+fish$length <- remove_unreasonable(fish$length, 5, 1000)
+fish$weight <- remove_unreasonable(fish$weight, 5, 4000)
+```
+
+## 2
+
+```{r conditions}
+fish_condition <- function(weight, length) {
+  (weight / (length ** 3)) * 100
+}
+
+fish$condition <- fish_condition(fish$weight, fish$length)
+```
+
+## 3
+
+```{r visualize}
+fish |>
+  group_by(year, species) |>
+  summarize(condition = mean(condition, na.rm = TRUE)) |>
+  ggplot(mapping = aes(x = as.factor(year), y = condition)) +
+  geom_point(position = "jitter", mapping = aes(fill = species, color = species)) +
+  lims(y = c(0, 0.05)) +
+  scale_fill_brewer(palette = "Paired") +
+  labs(title = str_c("Condition of Blackfoot River Trout"),
+      subtitle = str_c("by species: 
+                       <span style = 'color:#f8766d'>**Brown**</span>,
+                       <span style = 'color:#00bfc4'>**Rainbow**</span>,
+                       <span style = 'color:#7cae00'>**Bull**</span>,
+                       <span style = 'color:#c77cff'>**WCT**</span>"
+                      ),
+      x = "Year of Observation",
+      y = "",
+    ) +
+  theme(plot.title = element_markdown(size = 16),
+        plot.subtitle = element_markdown(size = 12),
+        legend.position = "none")
+```

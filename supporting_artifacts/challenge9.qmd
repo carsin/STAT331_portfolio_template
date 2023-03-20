@@ -1,0 +1,125 @@
+---
+title: "Challenge 9"
+author: "Carson Freedman"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+    code-fold: true
+execute:
+  echo: true
+  messages: false
+  warning: false
+  error: false
+editor: source
+---
+
+```{r libs}
+library(tidyverse)
+library(here)
+library(dplyr)
+library(broom)
+library(DT)
+library(knitr)
+library(kableExtra)
+```
+
+```{r data}
+names <- read_csv(file = here("Week9", "Lab9", "StateNames_A.csv"))
+DT::datatable(names)
+```
+
+## 1
+```{r}
+names |>
+  group_by(State, Gender) |>
+  filter(Name == "Allison") |>
+  summarize(Total = sum(Count)) |>
+  kable(format = "html", 
+        caption = "Number of babies Named 'Allison' by State") |>
+  kable_material(c("striped", "hover"))
+```
+
+
+## 2
+```{r}
+allison_f <- names |>
+  group_by(Year) |>
+  filter(Name == "Allison", Gender == "F") |>
+  summarize(Total = sum(Count))
+```
+
+## 3
+```{r}
+allison_f |>
+  ggplot(mapping = aes(x = Year, y = Total)) +
+  geom_col() +
+  lims(x = c(1996, 2014)) +
+  labs(x = "Year", y = "", 
+       title = "Number of Children Named 'Allison' per Year in the US")
+```
+
+## 4
+```{r}
+linear_model <- lm(Total ~ Year, data = allison_f)
+  
+broom::tidy(linear_model) |>
+  kable(format = "html") |>
+  kable_material(c("striped", "hover"))
+```
+
+## 5
+y = 209689.7609 - 101.5191(x)
+
+## 6
+```{r}
+linear_model |> 
+  broom::augment() |> 
+  ggplot(mapping = aes(y = .resid, x = .fitted)) +
+  geom_point() +
+  stat_smooth(method = "lm")
+```
+
+## 7
+The resulting linear model doesn't provide enough information to determine the
+trend over time.
+
+## 8
+```{r}
+names |>
+  group_by(Name, Year) |>
+  filter(Name == "Allan" | Name == "Allen" | Name == "Alan") |>
+  summarize(Total = sum(Count)) |>
+  ggplot(mapping = aes(x = Year, y = Total, fill = Name, color = Name)) +
+  geom_col() +
+  lims(x = c(1996, 2014))
+```
+
+## 9
+```{r}
+names |>
+  filter(Name == "Allan" | Name == "Allen" | Name == "Alan", Year == 2000,
+         State == "PA" | State == "CA") |>
+  group_by(Name, State) |>
+  summarize(Count = sum(Count)) |>
+  pivot_wider(names_from = Name, values_from = Count) |>
+  kable(format = "html", col.names = c('State', 'Alans', 'Allans', 'Allens'),
+        caption = "Number of Babies Named a Variation of 'Allan' in CA & PA") |>
+  kable_material(c("striped", "hover"))
+```
+
+## 10
+```{r}
+names |>
+  filter(Name == "Allan" | Name == "Allen" | Name == "Alan", Year == 2000,
+         State == "PA" | State == "CA") |>
+  group_by(State) |>
+  count(Name, wt = Count) |>
+  mutate(prop = n / sum(n)) |>
+  select(-n) |> 
+  pivot_wider(names_from = Name, values_from = prop) |>
+  kable(format = "html", col.names = c('State', 'Alan', 'Allan', 'Allen'),
+        caption = "Proportion of Babies Named a Variation of 'Allan' in CA & PA") |>
+  kable_material(c("striped", "hover"))
+```
+

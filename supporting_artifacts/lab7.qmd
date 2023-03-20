@@ -1,0 +1,107 @@
+---
+title: "Lab 7"
+author: "Carson Freedman"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+    code-fold: true
+execute:
+  echo: true
+  messages: false
+  warning: false
+  error: false
+editor: visual
+---
+
+# Part One
+
+## 1.
+
+```{r libs}
+library(tidyverse)
+library(here)
+library(ggridges)
+library(viridis)
+```
+
+```{r data}
+fish <- read_csv(file = here("Week7", "Lab7", "BlackfootFish.csv"))
+```
+
+```{r find missing}
+fish |>
+  summarize(across(everything(), .fns = ~sum(is.na(.x))))
+```
+
+## 2
+
+```{r visualize missing}
+grouped_fish <- fish |>
+  group_by(year, section, trip) |>
+  summarize(across(everything(), ~ sum(is.na(.x))))
+
+ggplot(data = grouped_fish, mapping = aes(y = weight, x = year)) +
+  geom_col(mapping = aes(color = trip, fill = trip)) +
+  facet_wrap(~ section) +
+  labs(title = "Yearly missing weight values by trip and region",
+       y = "Missing values per region", color = "Trip number", 
+       fill = "Trip number", x = "Year")
+```
+
+## 3
+
+```{r function}
+rescale_01 <- function(vec) {
+  if (is.numeric(vec) && length(vec) > 1) {
+    ((vec - min(vec, na.rm = TRUE)) / (max(vec, na.rm = TRUE) - min(vec, na.rm = TRUE)))
+  }
+}
+
+x <- c(1:85)
+test <- rescale_01(x)
+min(test)
+max(test)
+```
+
+## 4
+
+```{r}
+#| layout-ncol: 2
+rescaled_lens <- rescale_01(fish$length)
+rescaled_lens <- tibble(length = rescaled_lens)
+
+ggplot(data = fish, mapping = aes(x = length)) +
+  geom_density() +
+  lims(x = c(0, 650)) +
+  labs(title = "Densities of Fish Lengths", y = "", x = "Length (mm)")
+
+ggplot(data = rescaled_lens, mapping = aes(x = length)) +
+  geom_density() +
+  lims(x = c(0, 0.65)) +
+  labs(title = "Rescaled Densities of Fish Lengths", y = "", x = "Length (mm)")
+```
+
+## 5
+
+```{r}
+rescale_column <- function(dframe, vars) {
+  dframe <- dframe |>
+    mutate(across(.cols = {{ vars }},
+                  ~ rescale_01(.x)
+                  )
+           )
+}
+```
+
+## 6
+
+```{r}
+rescaled <- rescale_column(fish, c("length", "weight"))
+
+ggplot(data = rescaled, mapping = aes(x = length)) +
+  geom_density()
+
+ggplot(data = rescaled, mapping = aes(x = weight)) +
+  geom_density()
+```

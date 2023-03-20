@@ -1,0 +1,113 @@
+---
+title: "Lab9"
+author: "Carson Freedman"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+    code-fold: true
+execute:
+  echo: true
+  messages: false
+  warning: false
+  error: false
+editor: source
+---
+
+```{r libs}
+library(tidyverse)
+library(here)
+library(dplyr)
+library(broom)
+```
+
+```{r data}
+names <- read_csv(file = here("Week9", "Lab9", "StateNames_A.csv"))
+```
+
+## 1
+```{r}
+names |>
+  group_by(State, Gender) |>
+  filter(Name == "Allison") |>
+  summarize(total = sum(Count))
+```
+
+
+## 2
+```{r}
+allison_f <- names |>
+  group_by(Year) |>
+  filter(Name == "Allison", Gender == "F") |>
+  summarize(Total = sum(Count))
+```
+
+## 3
+```{r}
+allison_f |>
+  ggplot(mapping = aes(x = Year, y = Total)) +
+  geom_col() +
+  lims(x = c(1996, 2014)) +
+  labs(x = "Year", y = "", 
+       title = "Number of Children Named 'Allison' per Year in the US")
+```
+
+## 4
+```{r}
+linear_model <- lm(Total ~ Year, data = allison_f)
+  
+broom::tidy(linear_model)
+```
+
+## 5
+y = 209689.7609 - 101.5191(x)
+
+## 6
+```{r}
+linear_model |> 
+  broom::augment() |> 
+  ggplot(mapping = aes(y = .resid, x = .fitted)) +
+  geom_point() +
+  stat_smooth(method = "lm")
+```
+
+## 7
+The resulting linear model doesn't provide enough information to determine the
+trend over time.
+
+
+## 8
+```{r}
+names |>
+  group_by(Name, Year) |>
+  filter(Name %in% c("Allan", "Allen", "Alan")) |>
+  summarize(Total = sum(Count)) |>
+  ggplot(mapping = aes(x = Year, y = Total, fill = Name, color = Name)) +
+  geom_col() +
+  lims(x = c(1996, 2014))
+```
+
+> Revision: Change long == chain to %in% vec()
+
+## 9
+```{r}
+names |>
+  filter(Name == "Allan" | Name == "Allen" | Name == "Alan", Year == 2000,
+         State == "PA" | State == "CA") |>
+  group_by(Name, State) |>
+  summarize(Count = sum(Count)) |>
+  pivot_wider(names_from = Name, values_from = Count)
+```
+
+## 10
+```{r}
+names |>
+  filter(Name == "Allan" | Name == "Allen" | Name == "Alan", Year == 2000,
+         State == "PA" | State == "CA") |>
+  group_by(State) |>
+  count(Name, wt = Count) |>
+  mutate(prop = n / sum(n)) |>
+  select(-n) |> 
+  pivot_wider(names_from = Name, values_from = prop)
+```
+

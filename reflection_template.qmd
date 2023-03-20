@@ -11,7 +11,7 @@ execute:
   echo: true
 ---
 
-[**My Grade:**]{.underline} I believe my grade equivalent to course work evidenced below to be a B.
+[**My Grade:**]{.underline} I believe my grade for the course work evidenced below to be an A-. I demonstrated proficiency in all learning targets except two pivot operations. Additionally, I incorporated code feedback into future assignments and completed a few revisions for solutions I received growing ratings for, but admittedly not many. I also occassionaly went above and beyond, doing multiple challenge options such as Challenge 2 and Challenge 8, and I sometimes did external research, but didn't make citations as I used the external research to discover functions to look up documentation for, such as finding the na_if() in Lab 3. In group activities, I was always engaged and working in my role with my group members and ensuring they understood the solutions; however, I did not engage with code supplied in Discord. Finally, I completed all peer reviews on time except one, providing constructive and helpful feedback according to the style guide. I believe I don't quite deserve an A, as I didn't do everything completely; however, I also didn't do everything "one notch down", so I feel I fall somewhere between an A and a B.
 
 [**Learning Objective Evidence:**]{.underline} In the code chunks below, provide code from a Lab or Challenge assignment where you believe you have demonstrated proficiency with the specified learning target. Be sure to specify **where** the code came from (e.g., Lab 4 Question 2).
 
@@ -92,7 +92,7 @@ hiphop_clean |>
 -   factor
 
 ```{r wd-3-factor}
-# Lab 8
+# Lab 9, q8
 names |>
   group_by(Name, Year) |>
   filter(Name %in% c("Allan", "Allen", "Alan")) |>
